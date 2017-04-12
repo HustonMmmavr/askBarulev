@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+        <!-- new question -->
+
+        <h1>New question </h1>
+        <section class="col-md-9">
+          <form role="form">
+            
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="sizing-addon1">Title   </span>
+              <input type="text" class="form-control" placeholder="" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="sizing-addon2">Input your text   </span>
+              <textarea type="text" class="form-control" id="exampleTextarea" rows="3" placeholder="Ask yor question"></textarea>
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="sizing-addon1">Tags   </span>
+              <input type="text" class="form-control" placeholder="" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="martop15">
+              <button class="btn btn-success form-span col-md-1" type="submit">Ask </button>
+            </div>
+          
+          </form>
+        </section>
+{% endblock %}

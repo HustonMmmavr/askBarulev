@@ -1,0 +1,511 @@
+<html>
+  <head>
+	<meta charset="UTF-8">
+     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+     <link rel="stylesheet" type="text/css" href="/css/my.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+     <script src="/js/bootstrap.js"></script>
+     <script>
+      $(document).ready(function()
+          {
+            var txtlinks = $("#beautiful-link").text();
+            console.log(txtlinks);
+            var linksarr = txtlinks.split(" ");
+            console.log(linksarr);
+            var finlinks = "";
+            linksarr.forEach(function(item, i, linksarr)
+                {
+                  //console.log(item.lenght);
+                  //if (item.toString().lenght > 1)
+                  finlinks += "<a href=\"#\" style=\"font-size: " + (Math.random()*(32 - 16) + 16) + "px; color: #" + Math.floor(Math.random() * 16777215).toString(16) + ";\">" + item + " </a>";
+
+                });
+                console.log(finlinks);
+                $("#beautiful-link").html(finlinks);
+          })
+    </script>
+  </head>
+  <body>
+      <nav class="navbar navbar-inverse">
+        <div class="cointainer-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+              data-toogle="collapse" data-target="#main_menu"
+              aria-expanded="false">
+                <span class="sr-only"> </span>
+                <span class="icon-bar"> </span>
+                <span class="icon-bar"> </span>
+                <span class="icon-bar"> </span>
+            </button>
+            <a href="#" class="navbar-brand">AskBarulev</a>
+          </div>
+          <div class="collapse navbar-collapse" id="main-menu">
+            <ul class="nav navbar-nav">
+              <li class="active">
+                <form class="navbar-form navbar-left form-search" role="search">
+                  <div class="input-group">
+                    <span class="glyphicon glyphicon-search input-group-addon search_gl rounded_input" aria-hidden="true"></span>
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default rounded_btn">Search</button>
+                  </span>
+                  </div>
+                </form>
+              </li>
+            </ul>
+
+	<ul class="nav navbar-nav navbar-right uluser">
+              <!-- <li><a href="#">Log In</a></li> -->
+        	<li>
+                	<a href={% url 'login-url' %} role="button">
+                 		Log in
+                	</a>
+		<li>
+			<a href="{{registe_url}}" role="button">
+                 		Register
+                	</a>
+              	</li>
+        <ul>
+
+            <!--ul class="nav navbar-nav navbar-right uluser">
+              <li class="user dropdown">
+ 
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                  <img alt="Img" src="/img/kim.jpg"> User Userv
+                </a>
+            
+                <ul class="dropdown-menu user-menu">
+                  <li> <a href="{{login_url}}"> Settings </a> </li>
+                  <li role="separator" class="divider"></li>
+                  <li> <a href="#"> Log Out </a> </li>
+                </ul>
+
+              </li>
+            <ul>
+
+            <!-- {%ink} -->
+            <!-- {%  block user %} {% endblock %} -->
+            <!-- <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"> Log In</a></li>
+            <ul> -->
+        </div>
+      </nav>
+
+      <div class="container col-md-12">
+	{% block content %}
+	{% endblock %}
+      <!-- Questins -->
+        <!--h1> New questions
+            <a href="#"> <small> Hot questions </small> </a>
+        </h1>
+        <section class="col-md-9">
+         
+         <div class="martop15">
+            <div class="question-block">
+              <div class="question-info col-md-1">
+                <img alt="Img" src="/img/kim.jpg">
+                <input class="number-input" id="movie" type="number" value="0"/>
+              </div>
+              <div class="col-md-10 question-text">
+                <a href="#" class>Is America great?</a>
+                <div class="main-info">I think that america isnt great</div>
+                <div class="other-info"> 
+                  <span class="answer"> <a href="#"> answer (1) </a> </span> 
+                  <span class="tags">Tags: <a href="#"> hospital </a> <a href="#"> kuddy</a> <a href="#"> needmoereviadine</a></span>
+                 </div> 
+              </div>
+            </div>
+          </div>
+
+          <div class="martop15">
+            <div class="question-block">
+              <div class="question-info col-md-1">
+                <img alt="Img" src="/img/don.jpg">
+                <input class="number-input" id="movie" type="number" value="0"/>
+              </div>
+              <div class="col-md-10 question-text">
+                <a href="#" class>Do yoyu want great america?</a>
+                <div class="main-info">In selecting Mr. Priebus, Mr. Trump passed over Stephen K. Bannon, a right-wing media provocateur. But the president-elect named Mr. Bannon his senior counselor and chief West Wing strategist, signaling an embrace of the fringe ideology long advanced by Mr. Bannon and of a continuing disdain for the Republican establishment.
+
+                The dual appointments — with Mr. Bannon given top billing in the official announcement — instantly created rival centers of power in the Trump White House.
+                </div>
+                <div class="other-info"> 
+                  <span class="answer"> <a href="#"> answer (1) </a> </span> 
+                  <span class="tags">Tags: <a href="#"> hospital </a> <a href="#"> kuddy</a> <a href="#"> needmoereviadine</a></span>
+                 </div> 
+              </div>
+            </div>
+          </div>
+
+         <div class="martop15">
+            <div class="question-block">
+              <div class="question-info col-md-1">
+                <img alt="Img" src="/img/don.jpg">
+                <input class="number-input" id="movie" type="number" value="0"/>
+              </div>
+              <div class="col-md-10 question-text">
+                <a href="#" class>Do yoyu want great america?</a>
+                <div class="main-info">In selecting Mr. Priebus, Mr. Trump passed over Stephen K. Bannon, a right-wing media provocateur. But the president-elect named Mr. Bannon his senior counselor and chief West Wing strategist, signaling an embrace of the fringe ideology long advanced by Mr. Bannon and of a continuing disdain for the Republican establishment.
+
+                The dual appointments — with Mr. Bannon given top billing in the official announcement — instantly created rival centers of power in the Trump White House.
+                </div>
+                <div class="other-info"> 
+                  <span class="answer"> <a href="#"> answer (1) </a> </span> 
+                  <span class="tags">Tags: <a href="#"> hospital </a> <a href="#"> kuddy</a> <a href="#"> needmoereviadine</a></span>
+                 </div> 
+              </div>
+            </div>
+          </div>
+
+           <ul class="pagination">
+             <li> <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li> <a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+          </ul>
+
+        </section-->
+
+
+        <!--h1> Tag: Trump </h1>
+        <section class="col-md-9">
+         
+         <div class="martop15">
+            <div class="question-block">
+              <div class="question-info col-md-1">
+                <img alt="Img" src="/img/kim.jpg">
+                <input class="number-input" id="movie" type="number" value="0"/>
+              </div>
+              <div class="col-md-10 question-text">
+                <a href="#" class>Is America great?</a>
+                <div class="main-info"><p>I think that america isnt great</p></div>
+                <div class="other-info"> 
+                  <span class="answer"> <a href="#"> answer (1) </a> </span> 
+                  <span class="tags">Tags: <a href="#"> Trump </a> <a href="#"> america</a> <a href="#"> politics</a></span>
+                 </div> 
+              </div>
+            </div>
+          </div>
+
+          <div class="martop15">
+            <div class="question-block">
+              <div class="question-info col-md-1">
+                <img alt="Img" src="/img/don.jpg">
+                <input class="number-input" id="movie" type="number" value="0"/>
+              </div>
+              <div class="col-md-10 question-text">
+                <a href="#" class>Do yoyu want great america?</a>
+                <div class="main-info">
+                  <p>In selecting Mr. Priebus, Mr. Trump passed over Stephen K. Bannon, a right-wing media provocateur. But the president-elect named Mr. Bannon his senior counselor and chief West Wing strategist, signaling an embrace of the fringe ideology long advanced by Mr. Bannon and of a continuing disdain for the Republican establishment.
+
+                  The dual appointments — with Mr. Bannon given top billing in the official announcement — instantly created rival centers of power in the Trump White House.
+                  </p>
+                  <p> <a href="#">Read full question </a> </p>
+                </div>
+                <div class="other-info"> 
+                  <span class="answer"> <a href="#"> answer (1) </a> </span> 
+                  <span class="tags">Tags: <a href="#"> Trump </a> <a href="#"> america</a> <a href="#"> politics</a></span>
+                 </div> 
+              </div>
+            </div>
+          </div>
+
+         <div class="martop15">
+            <div class="question-block">
+              <div class="question-info col-md-1">
+                <img alt="Img" src="/img/ob.jpg">
+                <input class="number-input" id="movie" type="number" value="0"/>
+              </div>
+              <div class="col-md-10 question-text">
+                <a href="#" class>Do yoyu want great america?</a>
+                <div class="main-info"> 
+                  <p>Great to be back at CPAC. It's a place I have really — I love this place. I love you people. So thank you very much. First of all, I want to thank Matt Schlapp and his very, very     incredible wife and boss, Mercedes, who have been fantastic friends and supporters and so great when I watch them on television defending me; nobody has a chance. So I want to thank Matt and Mercedes.
+
+                    When Matt called and asked, I said absolutely I'll be there with you.
+
+                    The real reason I said it, I didn't want him to go against me, so I said absolutely. And it really is an honor to be here. I wouldn't miss a chance to talk to my friends. These are my friends. And we'll see you again next year and the year after that. And I'll be doing this with CPAC whenever I can, and I'll make sure that we're here a lot.
+
+                    if you remember, my first major speech — sit down, everybody, come on.
+
+                     You know, the dishonest media, they'll say he didn't get a standing ovation. You know why? No, you know why? Because everybody stood and nobody sat. So they'll say he never got a standing ovation, right?
+
+                    They are the worst.
+
+                    So sit down. Donald Trump did not get a standing ovation. They leave out the part they never sat down. They leave that out. So I just want to thank you.
+                  </p>
+                </div>
+                <div class="other-info"> 
+                  <span class="answer"> <a href="#"> answer (1) </a> </span> 
+                  <span class="tags">Tags: <a href="#"> Trump </a> <a href="#"> america</a> <a href="#"> politics</a></span>
+                 </div> 
+              </div>
+            </div>
+          </div>
+
+           <ul class="pagination">
+             <li> <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li> <a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+          </ul>
+
+        </section-->
+
+
+        <!--h1> How to build a moon park </h1>
+        <section class="col-md-9">
+          
+          <div class="martop15">
+            <div class="answer-area pad0">
+              <div class="answer-block padtopbot15">
+              <div class="answer-info col-md-1">
+                <img alt="Img" src="/img/don.jpg">
+                <input class="number-input" id="movie" type="number" value="0"/>
+              </div>
+              <div class="col-md-10 asnwer-text">
+                <a href="#" class>Do yoyu want great america?</a>
+                <div class="main-info-answer">
+                  <p>In selecting Mr. Priebus, Mr. Trump passed over Stephen K. Bannon, a right-wing media provocateur. But the president-elect named Mr. Bannon his senior counselor and chief West Wing strategist, signaling an embrace of the fringe ideology long advanced by Mr. Bannon and of a continuing disdain for the Republican establishment.
+
+                  The dual appointments — with Mr. Bannon given top billing in the official announcement — instantly created rival centers of power in the Trump White House.
+                  </p>
+                  <p><a href="#">Read full question </a> </p>
+                </div>
+                <div class="other-info"> 
+                  <span class="tags">Tags: <a href="#"> Trump </a> <a href="#"> america</a> <a href="#"> politics</a></span>
+                 </div> 
+              </div>
+            </div>
+            </div>
+          </div>
+
+          <div class="martop15">
+            <div class="answer-block bordered">
+              <div class="answer-info col-md-1">
+                <img alt="Img" src="/img/kim.jpg">
+                <input class="number-input" id="movie" type="number" value="0"/>
+              </div>
+              <div class="col-md-10 answer-text">
+                <a href="#" class>Is America great?</a>
+                <div class="main-info-answer"><p>orem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.</p></div>
+                  <div class="checkbo-left">
+                    <label><input type="checkbox" value="">Correct!</label>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="sizing-addon2">Input your answer   </span>
+              <textarea type="text" class="form-control" id="exampleTextarea" rows="3" placeholder="Ask yor question"></textarea>
+          </div>
+
+          <div class="martop15 " style="padding-bottom: 50px;">
+              <button class="btn btn-success form-span col-md-1" type="submit">Ask </button>
+          </div>
+
+
+    
+        </section-->
+
+
+        <!-- Login-->
+        <!--h1> Log In </h1>
+        <section class="col-md-9">
+          <form role="form">
+
+             <div class="alert alert-danger alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Error!</strong> Wrong password
+            </div>
+            
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="sizing-addon1">Login   </span>
+              <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="sizing-addon1">Password</span>
+              <input type="password" class="form-control" placeholder="Password" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="martop15">
+              <button class="btn btn-success form-span col-md-1" type="submit">Log in </button>
+            </div>
+          </form>
+
+          <br>
+          <div class="martop30">
+            <a href="#">Or create account </a>
+          </div>
+        </section-->
+
+
+
+        <!-- new question -->
+
+        <!--h1>New question </h1>
+        <section class="col-md-9">
+          <form role="form">
+            
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="sizing-addon1">Title   </span>
+              <input type="text" class="form-control" placeholder="" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="sizing-addon2">Input your text   </span>
+              <textarea type="text" class="form-control" id="exampleTextarea" rows="3" placeholder="Ask yor question"></textarea>
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="sizing-addon1">Tags   </span>
+              <input type="text" class="form-control" placeholder="" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="martop15">
+              <button class="btn btn-success form-span col-md-1" type="submit">Ask </button>
+            </div>
+          
+          </form>
+        </section-->
+
+        <!--h1> Settings </h1>
+        <section class="col-md-9">
+          <form role="form padtop15">
+
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Error!</strong> This niname is used already.
+            </div>
+            
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="setting-addon1">Login   </span>
+              <input type="text" class="form-control" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="setting-addon2">Email   </span>
+              <input type="text"  class="form-control" id="exampleTextarea" rows="3">
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="setting-addon3">NickName   </span>
+              <input type="text" class="form-control" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="upload-div col-md-12 martop15 pad0">
+
+              <div class="col-md-4 upload-img-div">
+                <img src="/img/noavatar.jpeg" class="upload-img">
+              </div> 
+
+              <div class="input-group col-md-8">
+                <span class="input-group-addon form-span" id="setting-addon4">Upload   </span>
+                <input type="text" class="form-control" aria-describedby="sizing-addon">
+                <label class="input-group-btn btn btn-success" style="font-size: 14px; max-height: 34px;">Search
+                  <input style="display: none" type="file">
+                </label>
+              </div>
+            </div>
+
+            <div class="martop15">
+              <button class="btn btn-success form-span col-md-1" type="submit">Ask </button>
+            </div>
+      
+          </form>
+        </section-->
+
+        <!--h1> Registration </h1>
+        <section class="col-md-9">
+          <form role="form">
+
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Error!</strong> This niname is used already.
+            </div>
+            
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="registration-addon1">Login   </span>
+              <input type="text" class="form-control" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="registration-addon2">Email   </span>
+              <input type="text"  class="form-control" id="exampleTextarea" rows="3">
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="registration-addon3">NickName   </span>
+              <input type="text" class="form-control" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="registration-addon4">Password   </span>
+              <input type="text"  class="form-control" id="exampleTextarea" rows="3">
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="registration-addon3">Repeat Password   </span>
+              <input type="text" class="form-control" aria-describedby="sizing-addon">
+            </div>
+
+            <div class="input-group martop15">
+              <span class="input-group-addon form-span" id="registration-addon4">Upload   </span>
+              <input type="text" class="form-control" aria-describedby="sizing-addon">
+              <label class="input-group-btn btn btn-success" style="font-size: 14px;">Search
+                <input style="display: none" type="file">
+              </label>
+            </div>
+
+            <div class="martop15">
+              <button class="btn btn-success form-span col-md-1" type="submit">Register </button>
+            </div>
+          
+          </form>
+
+        </section-->
+
+
+        <aside class="col-md-3">
+          <div class="pad15">
+            <span class="blockname">Popular&nbsp;tags</span>
+            <div id="beautiful-link" class="link-content">
+              python Technopark c++ javascipt Ruby Java 
+            </div>
+          </div>
+          <div class="pad15">
+            <span class="blockname"> Best&nbsp;members </span>
+            <ul class="members">
+              <li> <a href="#"> Mr. Freeman </a> </li>
+              <li> <a href="#"> Dr. House </a> </li>
+              <li> <a href="#"> Mr. Trump </a> </li>
+              <li> <a href="#"> Mr. Obama </a> </li>
+              <li> <a href="#"> Mr. Kim John In </a> </li>      
+            </ul>
+          </div>      
+        </aside>
+
+
+      </div>
+  </body>
+</html>
+
+
+
+
+
+  <!-- <input type="text" class="form-control bth-number" data-zeros="true" data-min="5" data-max="25"> -->
+              <!-- <div class="input-group spinner">
+                <input type="text" class="form-control" value="1" min="0" max="5">
+                <div class="input-group-btn-vertical">
+                  <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                  <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                </div>
+              </div> -->

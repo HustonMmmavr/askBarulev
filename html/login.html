@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+        <!-- Login-->
+        <h1> Log In </h1>
+        <section class="col-md-9">
+          <form role="form">
+
+             <div class="alert alert-danger alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Error!</strong> Wrong password
+            </div>
+
+            <div class="input-group martop15 has-error col-md-12 col-xs-12 pad0">
+              <div class="col-md-12 col-xs-12 pad0">
+                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon1">Login   </span>
+                <div class="pad0 col-md-10 col-xs-8">
+                  <input type="text" class="form-control col-md-12 col-xs-12 inp-radius" aria-describedby="sizing-addon" required>
+                  <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                </div>
+              </div>
+              <div class="form-control-feedback error">Sorry, that username's taken. Try another?</div>
+              <small class="form-text text-muted">Example help text that remains unchanged.</small>
+            </div>
+
+            <div class="input-group martop15 col-md-12 col-xs-12 pad0">
+              <div class="col-md-12 col-xs-12 pad0">
+                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">Password   </span>
+                <div class="pad0 col-md-10 col-xs-8">
+                  <input type="text"  class="form-control inp-radius" id="exampleTextarea" rows="3" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="martop15">
+              <button class="btn btn-success form-span col-md-1" type="submit">Log in </button>
+            </div>
+          </form>
+
+          <br>
+          <div class="martop30">
+            <a href={% url 'signup-url' %}> Or create account </a>
+          </div>
+        </section>
+
+{% endblock %}

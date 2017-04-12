@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Questins -->
+        <h1> New questions {{questions.num_pages}}
+            <a href={% url 'hot-url' %}> <small> Hot questions </small> </a> 
+        </h1>
+        <section class="col-md-9">
+	     	{% for question in  questions %}
+		         <div class="martop15">
+		            <div class="question-block">
+		              <div class="question-info col-md-1 col-xs-2">
+		                <img alt="Img" src="/img/kim.jpg">
+		                <input class="number-input" id="movie" type="number" value="0"/>
+		              </div>
+		              <div class="col-md-10 col-xs-10 question-text">
+		                <a href={% url 'question-url' question_number=question.id %} class>Is America great? {{question.title}}</a>
+		                <div class="main-info">I think that america isnt great    {{question.text}}</div>
+		                <div class="other-info"> 
+		                  <span class="answer"> <a href={% url 'question-url' question_number=question.id %}> answer (1) </a> </span> 
+		                  <span class="tags">Tags:
+	                    {% for tag in question.tags %}
+	                      <a href={% url 'tag-url' tag_name=tag %}> {{tag}}</a>
+	                    {% endfor %}
+	                  </span>
+		                 </div> 
+		              </div>
+		            </div>
+		          </div>
+		    {% endfor %}
+		  	{% include "paginat.html" with page_range=page_range objects=questions%}
+        </section>
+{% endblock %}
