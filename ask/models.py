@@ -100,6 +100,7 @@ class LikeToQuestionManager(models.Manager):
         question.save()
         return new
 
+# TODO Answer manager
 class Answer(models.Model):
     owner = models.ForeignKey(User)
     question = models.ForeignKey(Question)

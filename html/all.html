@@ -27,6 +27,6 @@
 		            </div>
 		          </div>
 		    {% endfor %}
-		  	{% include "paginat.html" with page_range=page_range objects=questions%}
+		  	{% include "paginat.html" with page_range=page_range objects=questions pag_url=paginator_url%}
         </section>
 {% endblock %}

@@ -56,6 +56,8 @@ def settings(request):
 
 # 
 
+#TODO try 
+#and send url to paginator
 def paginate(objects, count_on_page, num_page, pages_to_show):
 	interval = int(pages_to_show / 2) + 1
 	#print(str(interval))
@@ -79,8 +81,7 @@ def all(request, page_num):
 		print()
 	questions, page_range = paginate(questions, 5, int(page_num), 5)
 	print(page_range)
-	return render(request, 'all.html', {'questions': questions,
-										'page_range': page_range})
+	return render(request, 'all.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'all-url'})
 
 
 

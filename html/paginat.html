@@ -1,17 +1,17 @@
 <ul class="pagination">
    	{% if objects.has_previous %}
-     <li> <a href={% url 'all-url' page_num=objects.previous_page_number%} aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+     <li> <a href={% url paginator_url page_num=objects.previous_page_number%} aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
     {% endif %}
     {% for page in page_range %}
       {% if objects.number == page %}
-        <li><a href={% url 'all-url' page_num=page %} class="active_page">{{page}}</a></li>
+        <li><a href={% url paginator_url page_num=page %} class="active_page">{{page}}</a></li>
       {% else %}
-         <li> <a href={% url 'all-url' page_num=page %}> {{page}} </a></li>
+         <li> <a href={% url paginator_url page_num=page %}> {{page}} </a></li>
       {%endif%}
     {% endfor %}
     {% if objects.has_next %}
       <li> 
-      <a href={% url 'all-url' page_num=objects.next_page_number%} aria-label="Next"> <span aria-hidden="true">&raquo;</span></a>
+      <a href={% url paginator_url page_num=objects.next_page_number%} aria-label="Next"> <span aria-hidden="true">&raquo;</span></a>
       </li>
     {% endif %}
   </ul>
