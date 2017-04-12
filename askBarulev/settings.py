@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'askBarulev.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'tr_bd1',
+        'NAME': 'ask',
         'USER': 'comp',
         'PASSWORD': '951103',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on

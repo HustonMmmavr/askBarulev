@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models import Count, Sum
 from django.core.urlresolvers import reverse
-from    django.db.models.functions import Coalesce
+from django.db.models.functions import Coalesce
 import datetime
 
 #class Profile(models.Model)
