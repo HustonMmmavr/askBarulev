@@ -87,7 +87,7 @@ def generate_answer_likes(n):
 		a = Answer.objects.filter(id=random.randint(1, answers))[0]
 		al = LikeToAnswer(answer=a, owner=u, value=arr[idx])
 		LikeToAnswer.objects.add_or_update(u, a, arr[idx])
-		al.save()
+		#al.save()
 	print('al')
 
 
@@ -102,7 +102,7 @@ def generate_question_likes(n):
 		a = Question.objects.filter(id=random.randint(1, questions))[0]
 		al = LikeToQuestion(question=a, owner=u, value=arr[idx])
 		LikeToQuestion.objects.add_or_update(u, a, arr[idx])
-		al.save()
+		#al.save()
 	print('aq')
 
 

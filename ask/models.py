@@ -7,7 +7,10 @@ from django.db.models.functions import Coalesce
 import datetime
 
 #class Profile(models.Model)
-
+class Profile(models.Model):
+    user = models.OneToOneField(User)
+    avatar = models.ImageField(upload_to='avatars')
+    info = models.TextField()
 
 class User(models.Model):
     nick = models.CharField(max_length=50)
@@ -126,8 +129,8 @@ class LikeToAnswerManager(models.Manager):
         return self.filter(answer=answer)
 
     # returns likes count (sum) for a question
-    def sum_for_question(self, answer):
-        res = self.has_question(answer).aggregate(sum=Sum('value'))['sum']
+    def sum_for_answer(self, answer):
+        res = self.has_answer(answer).aggregate(sum=Sum('value'))['sum']
         return res if res else 0
 
     # add like if not exists
@@ -138,7 +141,7 @@ class LikeToAnswerManager(models.Manager):
                 defaults={'value': value}
                 )
 
-        answer.likes = self.sum_for_question(answer)
+        answer.likes = self.sum_for_answer(answer)
         answer.save()
         return new
 
