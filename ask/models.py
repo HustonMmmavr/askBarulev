@@ -6,21 +6,10 @@ from django.core.urlresolvers import reverse
 from django.db.models.functions import Coalesce
 import datetime
 
-#class Profile(models.Model)
 class Profile(models.Model):
     user = models.OneToOneField(User)
     avatar = models.ImageField(upload_to='avatars')
-    info = models.TextField()
-
-class User(models.Model):
-    nick = models.CharField(max_length=50)
-    password = models.CharField(max_length=30)
-    image = models.ImageField(upload_to='avat')
-    email = models.EmailField()
-    login = models.CharField(max_length=50)
-
-    def __unicode__(self):
-    	return self.nick + ": " +str(self.id)
+    info = models.TextField(default='mm')
 
 class TagManager(models.Manager):
     # searches using title
@@ -66,7 +55,7 @@ class QuestionManager(models.Manager):
         return self.get_queryset().order_by_popularity().with_date_greater(week_ago)
 
 class Question(models.Model):
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(Profile)
     title = models.CharField(max_length=50)
     text = models.TextField()
     answers = models.IntegerField(default=0)
@@ -75,8 +64,6 @@ class Question(models.Model):
     likes = models.IntegerField(default=0)
 
     objects = QuestionManager()
-    #def likes(self):
-    #    return LikeToQuestion.objects.sum_for_question(self)
     class Meta:
         ordering = ['-date']
 
@@ -105,7 +92,7 @@ class LikeToQuestionManager(models.Manager):
 
 # TODO Answer manager
 class Answer(models.Model):
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(Profile)
     question = models.ForeignKey(Question)
     title = models.CharField(max_length=50)
     text = models.TextField()
@@ -118,7 +105,7 @@ class LikeToQuestion(models.Model):
     DOWN = -1
 
     question = models.ForeignKey(Question)
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(Profile)
     value = models.SmallIntegerField(default=1)
     objects = LikeToQuestionManager()
 
@@ -152,67 +139,6 @@ class LikeToAnswer(models.Model):
     DOWN = -1
 
     answer = models.ForeignKey(Answer)
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(Profile)
     value = models.SmallIntegerField(default=1)
     objects = LikeToAnswerManager()
-
-
-        # return if self.has_question(question).aggregate(sum=Sum('value'))['sum']
-    #def sum_for_questions(self, questions)
-
-         #ltq = LikeToQuestion.objects#.sum_for_question(self)
-    #     likes = []
-         #for q in self:
-    #         #likes.append({'likes': ltq.sum_for_question(q)})
-        #    q.likes = ltq.sum_for_question(q)
-    #         print(q.likes)
-    #         print(q)
-    #         # if lik:
-         #   print(str(q.id) + " " + str(q.likes))
-    #         # q.add(likes=ltq.sum_for_question(q))
-
-    #     for q in self:
-    #         print(q.likes)
-
-
-    # class QuestionSet(models.QuerySet):
-#     def add_tags(self):
-#         return self.prefetch_related('tags')
-    
-#     # preloads answers
-#     def add_answers(self):
-#         res = self.prefetch_related('answer_set')
-#         res = self.prefetch_related('answer_set__owner')
-#         # res = self.prefetch_related('answer_set__author__profile')
-#         return res
-
-#     # loads number of answers
-#     def add_answers_count(self):
-#         return self.annotate(answers_cnt=Count('answer__id', distinct=True))
-
-#     def add_likes(self):
-
-#         ltq = LikeToQuestion.objects#.sum_for_question(self)
-#         likes = []
-#         for q in self:
-#         #likes.append({'likes': ltq.sum_for_question(q)})
-#             q.likes = ltq.sum_for_question(q)
-#             print(q.likes)
-#             print(q)
-#             # if lik:
-#             print(str(q.id) + " " + str(q.likes))
-#         # q.add(likes=ltq.sum_for_question(q))
-#         return self.annotate(lik_cnt=LikeToQuestion.objects.value__sum)#Count('liketoquestion__id', distinct=True))
-#          #aggregate(lik_cnt=(Sum('liketoquestion.question_id')))['sum']#, 0))#notate(likes=ltq.sum_for_question(int(self.id)))#(lambda f: (for q in self:
-#     #                                     #ltq.sum_for_question(self))))#ltq.sum_for_question(self))
-#     # loads author
-#     def add_author(self):
-#         return self.select_related('owner')#.select_related('owner__')
-
-#     # order by popularity
-#     def order_by_popularity(self):
-#         return self.order_by('-likes')
-
-#     # filter by date
-#     def with_date_greater(self, date):
-#         return self.filter(date__gt=date)
