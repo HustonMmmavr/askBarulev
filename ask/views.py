@@ -70,6 +70,7 @@ def paginate(objects, count_on_page, num_page, pages_to_show):
 
 def all(request, page_num):
 	print(page_num)
+	#print(MEDIA_ROOT)
 	questions = []
 	for i in range(1,30):
 		questions.append({

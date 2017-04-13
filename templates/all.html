@@ -2,7 +2,7 @@
 {% block content %}
 <!-- Questins -->
         <h1> New questions {{questions.num_pages}}
-            <a href={% url 'hot-url' %}> <small> Hot questions </small> </a> 
+            <a href={% url 'hot-url' %}> <small>{{MEDIA_ROOT}} <!--Hot questions </small>--> </a> 
         </h1>
         <section class="col-md-9">
 	     	{% for question in  questions %}
