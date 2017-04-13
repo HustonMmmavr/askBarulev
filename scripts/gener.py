@@ -13,14 +13,15 @@ def generate_users(cnt):#, names, surnames):
 	imgs = os.listdir('/home/comp/askBarulev/scripts/test_img')
 	imgsc = len(imgs)
 	# print(imgs)
-
+	#u = Profile.objects.all()
+	#for t in u:
+	#	print(t.avatar)
 	for i in range(0,cnt):
 		print(i)
 		fname = names[random.randint(0, nsize-1)]
 		sname = snames[random.randint(0, ssize - 1)]
 		email = names[random.randint(0, nsize - 1)] + '@' + mails[random.randint(0, msize - 1)] + '.ru'
 		pwd = str(random.randint(10000,1000000))
-
 		u = User()
 		u.username = fname + ' ' + sname + str(i)#data.get('username')
 		u.password = pwd#make_password(password)
@@ -32,10 +33,13 @@ def generate_users(cnt):#, names, surnames):
 		u.save()
 
 		img = imgs[random.randint(0, imgsc - 1)]
+		print(img)
+		#f = open('/home/comp/askBarulev/scripts/test_img/' + img, "r")
+
 		#login = 'login'
 		p = Profile(user=u, avatar=img)#User(use=name, password=pwd, image=img, email=email, login=login)
 		p.save()
-	# print('use')
+		print(p.avatar)	# print('use')
 
 def generate_questions(n):
 	arr = open('/home/comp/askBarulev/scripts/text.txt', 'r').read().split(' ')
@@ -141,11 +145,11 @@ def run():
 		#while i < 10:
 		#	print(random.randint(0,1))
 		generate_users(100)
-		generate_tags(125)
-		generate_questions(1150)
-		generate_answers(1150)
-		generate_answer_likes(2500)
-		generate_question_likes(2500)
+		#generate_tags(125)
+		#generate_questions(1150)
+		#generate_answers(1150)
+		#generate_answer_likes(2500)
+		#generate_question_likes(2500)
 	except Exception as ex:
 	    template = "An exception of type {0} occurred. Arguments:\n{1!r}"
 	    message = template.format(type(ex).__name__, ex.args)

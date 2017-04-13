@@ -34,5 +34,6 @@ urlpatterns = [
     url(r'^settings/', views.settings, name='settings-url'),
     url(r'^question/(?P<question_number>[0-9]+)/', views.question, name='question-url'),
     url(r'^all/(?P<page_num>[0-9]+)/', views.all, name='all-url'),
-] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

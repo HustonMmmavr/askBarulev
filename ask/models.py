@@ -6,9 +6,20 @@ from django.core.urlresolvers import reverse
 from django.db.models.functions import Coalesce
 import datetime
 
+
+def get_image_path(instance, filename):
+    return os.path.join('photos', str(instance.id), filename)
+from django.core.files.storage import FileSystemStorage
+
+fs = FileSystemStorage(location='/media/photos')
+
+#class Car(models.Model):
+    #...
+    #photo = models.ImageField(storage=fs)
+
 class Profile(models.Model):
     user = models.OneToOneField(User)
-    avatar = models.ImageField(upload_to='avatars')
+    avatar = models.ImageField(storage=fs)#upload_to=get_image_path)
     info = models.TextField(default='mm')
 
 class TagManager(models.Manager):
