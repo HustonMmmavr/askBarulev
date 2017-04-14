@@ -46,6 +46,7 @@ def generate_questions(n):
 	asize = len(arr)
 	print(asize)
 	tag_table_cnt = Tag.objects.count()
+	print(tag_table_cnt)
 	qcount = Profile.objects.count()
 	for i in range(0,n):
 		print(i)
@@ -59,8 +60,11 @@ def generate_questions(n):
 		q = Question(owner=own, title=title,text=text)
 		q.save()
 		tag_cnt = random.randint(1, 5)
-		for j in (0,tag_cnt):
+		print(tag_cnt)
+		for j in range(0,tag_cnt):
+			print(j)
 			tq = Tag.objects.filter(id=random.randint(1, tag_table_cnt))[0]
+			print(tq.title)
 			q.tags.add(tq)
 	print('que')
 
@@ -129,12 +133,11 @@ def generate_question_likes(n):
 
 def generate_tags(n):
 	#print('aaa')
-	arr = open('/home/comp/askBarulev/scripts/tags', 'r').read().split(' ')
+	arr = open('/home/comp/askBarulev/scripts/tags', 'r').read().split('\n')
 	asize = len(arr)#.size()
 	for i in range(0, asize):
-		#//tornd = random.randint(0,asize-1)
-		#print(arr[tornd])
 		t = Tag(title=arr[i])
+		print(t.title)
 		t.save()
 	print('tag')
 
@@ -144,12 +147,12 @@ def run():
 		#i = 0
 		#while i < 10:
 		#	print(random.randint(0,1))
-		generate_users(100)
-		#generate_tags(125)
-		#generate_questions(1150)
-		#generate_answers(1150)
-		#generate_answer_likes(2500)
-		#generate_question_likes(2500)
+		#generate_users(100)
+		generate_tags(125)
+		generate_questions(150)
+		generate_answers(210)
+		generate_answer_likes(350)
+		generate_question_likes(350)
 	except Exception as ex:
 	    template = "An exception of type {0} occurred. Arguments:\n{1!r}"
 	    message = template.format(type(ex).__name__, ex.args)

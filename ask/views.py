@@ -5,6 +5,7 @@ from  django.template import loader
 from django.template import Template
 from django.shortcuts import render, render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from ask.models import Question, Profile, Answer, LikeToQuestion, LikeToAnswer, Tag
 
 def main( wsgi_request):
     resp = ['<p>I Like ruby!</p>']
@@ -71,15 +72,18 @@ def paginate(objects, count_on_page, num_page, pages_to_show):
 def all(request, page_num):
 	print(page_num)
 	#print(MEDIA_ROOT)
-	questions = []
-	for i in range(1,30):
-		questions.append({
-			'title': 'title ' + str(i),
-			'id': i,
-			'text': 'text' + str(i),
-			'tags': {'politics', 'america'},
-	})
-		print()
+	questions = Question.objects.all()#.append_author()#.append_answers_count()
+	for q in questions:
+		print(q.tags)
+		#print(str(q.answers_count) + ' ' + str(q.likes))#owner.first_name)
+	# for i in range(1,30):
+	# 	questions.append({
+	# 		'title': 'title ' + str(i),
+	# 		'id': i,
+	# 		'text': 'text' + str(i),
+	# 		'tags': {'politics', 'america'},
+	# })
+	# 	print()
 	questions, page_range = paginate(questions, 5, int(page_num), 5)
 	print(page_range)
 	return render(request, 'all.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'all-url'})
