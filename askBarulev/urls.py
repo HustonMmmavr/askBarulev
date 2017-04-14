@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^main/', views.main),
     #url(r'^contr/(?P<num>\w+)/', contr.app),
+    url(r'^hot/(?P(page_num)/', views.hot, name='hot-url'),
     url(r'^hot/', views.hot, name='hot-url'),
     url(r'^tag/(?P<tag_name>\w+)/', views.tag, name='tag-url'),
     url(r'^login/', views.login, name='login-url'),

@@ -132,7 +132,6 @@ def generate_question_likes(n):
 
 
 def generate_tags(n):
-	#print('aaa')
 	arr = open('/home/comp/askBarulev/scripts/tags', 'r').read().split('\n')
 	asize = len(arr)#.size()
 	for i in range(0, asize):

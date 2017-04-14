@@ -33,57 +33,47 @@ def main( wsgi_request):
 def login(request):
 	return render(request, 'login.html')
 
-def hot(request):
-
-	return render(request, 'hot.html')
-
-def tag(request, tag_name):
-	return render(request, 'tag.html') 
-
-
 def signup(request):
 	return render(request, 'signup.html') 
-
 
 def ask(request):
 	temp = loader.get_template('ask.html')
 	return render(request, 'ask.html')
 
-def question(request, question_number):
-	return render(request, 'question.html')
-
 def settings(request):
 	return render(request, 'settings.html')
 
-# 
+
+
 
 #TODO try 
 #and send url to paginator
+
+
+def hot(request, page_num=1):
+	return render(request, 'hot.html')
+
+def tag(request, tag_name):
+	return render(request, 'tag.html') 
+
+def question(request, question_number):
+	q = Question.objects.get_single(int(question_number))
+	print(q.text)
+	return render(request, 'question.html', {'question': q})
+
 def paginate(objects, count_on_page, num_page, pages_to_show):
+#	try
 	interval = int(pages_to_show / 2) + 1
-	#print(str(interval))
 	paginator = Paginator(objects, count_on_page)
 	min_idx = 0 if (int(num_page) - interval < 0) else int(num_page) - interval
 	max_idx =  num_page + interval if (num_page + interval < paginator.num_pages) else paginator.num_pages
 	paginated = paginator.page(int(num_page))
 	page_range = paginator.page_range[min_idx:max_idx]
+#	exept PageNotInteger:
 	return paginated, page_range
 
 def all(request, page_num):
-	print(page_num)
-	#print(MEDIA_ROOT)
 	questions = Question.objects.all()#.append_author()#.append_answers_count()
-	for q in questions:
-		print(q.tags)
-		#print(str(q.answers_count) + ' ' + str(q.likes))#owner.first_name)
-	# for i in range(1,30):
-	# 	questions.append({
-	# 		'title': 'title ' + str(i),
-	# 		'id': i,
-	# 		'text': 'text' + str(i),
-	# 		'tags': {'politics', 'america'},
-	# })
-	# 	print()
 	questions, page_range = paginate(questions, 5, int(page_num), 5)
 	print(page_range)
 	return render(request, 'all.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'all-url'})
@@ -103,7 +93,15 @@ def all(request, page_num):
 
 
 
-
+		#print(str(q.answers_count) + ' ' + str(q.likes))#owner.first_name)
+	# for i in range(1,30):
+	# 	questions.append({
+	# 		'title': 'title ' + str(i),
+	# 		'id': i,
+	# 		'text': 'text' + str(i),
+	# 		'tags': {'politics', 'america'},
+	# })
+	# 	print()
 
 
 

@@ -9,8 +9,8 @@
 		         <div class="martop15">
 		            <div class="question-block">
 		              <div class="question-info col-md-1 col-xs-2">
-		                <img alt="Img" src="/img/kim.jpg">
-		                <input class="number-input" id="movie" type="number" value="0"/>
+		                <img alt="Img" src="{{question.owner.avatar}}"> <!-- TODO -->
+		                <input class="number-input" id="movie" type="number" value="{{question.likes}}"/> <!-- TODO not input -->
 		              </div>
 		              <div class="col-md-10 col-xs-10 question-text">
 		                <a href={% url 'question-url' question_number=question.id %} class> {{question.title}}</a>
@@ -29,4 +29,4 @@
 		    {% endfor %}
 		  	{% include "paginat.html" with page_range=page_range objects=questions pag_url=paginator_url%}
         </section>
-{% endblock %}answers_count
+{% endblock %}
