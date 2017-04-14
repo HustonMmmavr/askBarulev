@@ -3,6 +3,31 @@
 <!-- Questins -->
         <h1> Hot questions </h1>
         <section class="col-md-9">
+        {% for question in questions %}
+             <div class="martop15">
+                <div class="question-block">
+                  <div class="question-info col-md-1 col-xs-2">
+                    <img alt="Img" src="{{question.owner.avatar}}"> <!-- TODO -->
+                    <input class="number-input" id="movie" type="number" value="{{question.likes}}"/> <!-- TODO not input -->
+                  </div>
+                  <div class="col-md-10 col-xs-10 question-text">
+                    <a href={% url 'question-url' question_number=question.id %} class> {{question.title}}</a>
+                    <div class="main-info">{{question.text}}</div>
+                    <div class="other-info"> 
+                      <span class="answer"> <a href={% url 'question-url' question_number=question.id %}> answer ({{question.answers_count}}) </a> </span> 
+                      <span class="tags">Tags:
+                      {% for tag in question.tags.all %}
+                          <a href={% url 'tag-url' tag_name=tag.title %}> {{tag.title}}</a>
+                      {% endfor %}
+                        </span>
+                     </div> 
+                  </div>
+                </div>
+              </div>
+        {% endfor %}
+        {% include "paginat.html" with page_range=page_range objects=questions pag_url=paginator_url%}
+        </section>
+        <!-- <section class="col-md-9">
          
          <div class="martop15">
             <div class="question-block">
@@ -71,5 +96,5 @@
             <li> <a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
           </ul>
 
-        </section>
+        </section> -->
 {% endblock %}

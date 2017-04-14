@@ -25,9 +25,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^main/', views.main),
-    #url(r'^contr/(?P<num>\w+)/', contr.app),
-    url(r'^hot/(?P(page_num)/', views.hot, name='hot-url'),
+    url(r'^hot/(?P<page_num>\w+)/', views.hot, name='hot-url'),
     url(r'^hot/', views.hot, name='hot-url'),
+   
+    url(r'^tag/(?P<tag_name>\w+)/(?P<page_num>\w+)/', views.tag, name='tag-url'),
     url(r'^tag/(?P<tag_name>\w+)/', views.tag, name='tag-url'),
     url(r'^login/', views.login, name='login-url'),
     url(r'^signup/', views.signup, name='signup-url'),
@@ -35,6 +36,8 @@ urlpatterns = [
     url(r'^settings/', views.settings, name='settings-url'),
     url(r'^question/(?P<question_number>[0-9]+)/', views.question, name='question-url'),
     url(r'^all/(?P<page_num>[0-9]+)/', views.all, name='all-url'),
+    url(r'^all/', views.all, name='all-url'),
+    url(r'', views.all,  name='all-url'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

@@ -18,10 +18,10 @@ class Profile(models.Model):
     avatar = models.ImageField(storage=fs)#upload_to=get_image_path)
     info = models.TextField(default='mm')
 
-# class TagManager(models.Manager):
-#     # searches using title
-#     def get_by_title(self, title):
-#         return self.get(title=title)
+class TagManager(models.Manager):
+    # searches using title
+    def get_by_title(self, title):
+        return self.get(title=title)
 
 
 class Tag(models.Model):
@@ -29,7 +29,7 @@ class Tag(models.Model):
 
     def get_url(self):
         return reverse(kwargs={'tag': self.title})
- #objects=TagManager()
+    objects=TagManager()
 
 
 class QuestionQuerySet(models.QuerySet):
@@ -43,6 +43,9 @@ class QuestionQuerySet(models.QuerySet):
         #res = self.prefetch_related('answer_set__author')
        # res = self.prefetch_related('answer_set__author__user')
         return res
+
+    def order_by_popularity(self):
+        return self.order_by('-likes')
 
     # loads number of answers
     def with_answers_count(self):
@@ -90,8 +93,8 @@ class Question(models.Model):
     likes = models.IntegerField(default=0)
 
     objects = QuestionManager()#.append_data()#.append_data()
-   # class Meta:
-    #    ordering = ['-date']
+    class Meta:
+        ordering = ['-date']
 
 
 class LikeToQuestionManager(models.Manager):

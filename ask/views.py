@@ -50,17 +50,6 @@ def settings(request):
 #and send url to paginator
 
 
-def hot(request, page_num=1):
-	return render(request, 'hot.html')
-
-def tag(request, tag_name):
-	return render(request, 'tag.html') 
-
-def question(request, question_number):
-	q = Question.objects.get_single(int(question_number))
-	print(q.text)
-	return render(request, 'question.html', {'question': q})
-
 def paginate(objects, count_on_page, num_page, pages_to_show):
 #	try
 	interval = int(pages_to_show / 2) + 1
@@ -72,7 +61,24 @@ def paginate(objects, count_on_page, num_page, pages_to_show):
 #	exept PageNotInteger:
 	return paginated, page_range
 
-def all(request, page_num):
+
+def hot(request, page_num=1):
+	questionsObjs = Question.objects.list_hot()
+	questions, page_range = paginate(questionsObjs, 5, int(page_num), 5)
+	return render(request, 'hot.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'hot-url'}) 
+
+def tag(request, tag_name, page_num=1):
+	tag = Tag.objects.get_by_title(tag_name)
+	questionsObjs = Question.objects.list_tag(tag)
+	questions, page_range = paginate(questionsObjs, 5, int(page_num), 5)
+	return render(request, 'tag.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'tag-url', 'tag': tag}) 
+
+def question(request, question_number):
+	q = Question.objects.get_single(int(question_number))
+	print(q.text)
+	return render(request, 'question.html', {'question': q})
+
+def all(request, page_num=1):
 	questions = Question.objects.all()#.append_author()#.append_answers_count()
 	questions, page_range = paginate(questions, 5, int(page_num), 5)
 	print(page_range)
