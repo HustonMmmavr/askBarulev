@@ -30,16 +30,13 @@
               </div>
             </div>
 
+		<div style="clear: both"></div>
 
-            <div class="martop15">
-              <button class="btn btn-success form-span col-md-1" type="submit">Log in </button>
-            </div>
+              <div style="width: 100%; height: 50px;"><button class="btn btn-success form-span col-md-1" type="submit">Log in </button></div>
+		<a style="display: block" href={% url 'signup-url' %}> Or create account </a>
+            
           </form>
 
-          <br>
-          <div class="martop30">
-            <a href={% url 'signup-url' %}> Or create account </a>
-          </div>
         </section>
 
 {% endblock %}

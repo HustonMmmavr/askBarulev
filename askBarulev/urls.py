@@ -20,24 +20,21 @@ from ask import views
 #from . import contr
 from django.conf.urls.static import static
 
-#TODO Tag num..
-#for default ex no page in reques
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^main/', views.main),
+    url(r'^login/', views.login, name='login-url'),
     url(r'^hot/(?P<page_num>\w+)/', views.hot, name='hot-url'),
     url(r'^hot/', views.hot, name='hot-url'),
-   
     url(r'^tag/(?P<tag_name>\w+)/(?P<page_num>\w+)/', views.tag, name='tag-url'),
     url(r'^tag/(?P<tag_name>\w+)/', views.tag, name='tag-url'),
-    url(r'^login/', views.login, name='login-url'),
     url(r'^signup/', views.signup, name='signup-url'),
     url(r'^ask/', views.ask, name='ask-url'),
     url(r'^settings/', views.settings, name='settings-url'),
     url(r'^question/(?P<question_number>[0-9]+)/', views.question, name='question-url'),
     url(r'^all/(?P<page_num>[0-9]+)/', views.all, name='all-url'),
     url(r'^all/', views.all, name='all-url'),
-    url(r'', views.all,  name='all-url'),
+    url(r'^$', views.all,  name='all-url'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
