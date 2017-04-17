@@ -18,6 +18,9 @@ class Profile(models.Model):
     avatar = models.ImageField(storage=fs)#upload_to=get_image_path)
     info = models.TextField(default='mm')
 
+    def get_avatar(self):
+        return '/uploads/'+ str(self.avatar)
+
 class TagManager(models.Manager):
     # searches using title
     def get_by_title(self, title):
@@ -213,79 +216,3 @@ class LikeToAnswer(models.Model):
     owner = models.ForeignKey(Profile)
     value = models.SmallIntegerField(default=1)
     objects = LikeToAnswerManager()
-
-
-
-
-# def get_queryset(self):
-    #     qs = super(QuestionManager, self).get_queryset()
-    #     qs.annotate(answers_count=Count('answer__id', distinct=True))
-    #     qs.select_related('owner').select_related('owner_user')
-    #     qs.prefetch_related('tags')
-    #     return qs
-    #def
-    #def get_queryset(self):
-    #    self.append_author()
-    #    self.append_tags()
-    #    self.append_tags()
-    #    return super(QuestionManager, self).get_queryset()
-        # qs = super(QuestionManager, self).get_queryset()
-        # qs.annotate(answers_count=Count('answer__id', distinct=True))
-        # qs.select_related('owner')
-        # qs.prefetch_related('tags')
-        #return super(QuestionManager, self).get_queryset().annotate(answers_count=Count('answer__id', distinct=True)).select_related('owner').prefetch_related('tags')
-        # self.append_author(qs)
-        # self.append_tags(qs)
-        # self.append_answers_count(qs)
-      #super(QuestionManager, self).get_queryset().annotate(answers_count=Count('answer__id', distinct=True)).select_related('owner').prefetch_related('tags')
-    
-    # def append_data(self):
-    #     self.append_author()
-    #     self.append_answers_count()
-    #     self.append_tags()
-    #     return self.all()
-    
-    # def append_author(self):
-    #     return self.all().select_related('owner')
-    
-    # def append_answers_count(self):
-    #     self.all().annotate(answers_count=Count('answer__id', distinct=True))
-
-    # def append_tags(self):
-    #     self.all().prefetch_related('tags')
-
-    # def get_queryset(self):
-    #     self.append_author()
-    #     self.append_tags()
-    #     self.append_answers_count()
-    #     return super(QuestionManager, self).get_queryset()
-    # def append_author(self, qs):
-    #     qs.select_related('owner')
-
-    # def append_tags(self, qs):
-    #     qs.prefetch_related('tags')
-
-    # def append_answers_count(self, qs):
-    #     qs.annotate(answers_count=Count('answer__id', distinct=True))
-    
-    # def get_queryset(self):
-    #     qs = super(QuestionManager, self).get_queryset()
-    #     self.append_author(qs)
-    #     self.append_tags(qs)
-    #     self.append_answers_count(qs)
-    #     return qs#super(QuestionManager, self).get_queryset().annotate(answers_count=Count('answer__id', distinct=True)).select_related('owner').prefetch_related('tags')
-        #return self
-        # return self.prefetch_related('tags')
-    #     return self
-
-    # def append_author(self):
-        # res = self.get_queryset().select_related('owner')
-        # return res
-
-    # def append_tags(self):
-    #     return self.prefetch_related('tags')
-    #     return self
-
-    # def append_data(self):
-    #     print('data')
-    #     return self.append_author().appnend_answers_count().append_tags()

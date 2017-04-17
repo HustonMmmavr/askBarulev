@@ -9,7 +9,7 @@
 		         <div class="martop15">
 		            <div class="question-block">
 		              <div class="question-info col-md-1 col-xs-2">
-		               		 <img alt="{{question.owner.user.username}}" src="{{  imgpath  }}"/> 
+                		<img alt="{{question.owner.get_avatar}}" src="{{question.owner.get_avatar}}">
 		                <input class="number-input" id="movie" type="number" value="{{question.likes}}"/> <!-- TODO not input -->
 		              </div>
 		              <div class="col-md-10 col-xs-10 question-text">

@@ -7,7 +7,7 @@
             <div class="answer-area pad0">
               <div class="answer-block padtopbot15">
               <div class="answer-info col-xs-2 col-md-1">
-                  <img alt="Img" src="">
+                  <img alt="Img" src="{{question.owner.get_avatar}}">
                 <input class="number-input" id="movie" type="number" value="{{question.likes}}"/>
               </div>
               <div class="col-md-10 col-xs-10 answer-text">
@@ -31,7 +31,7 @@
             <div class="martop15">
               <div class="answer-block bordered">
                 <div class="answer-info col-md-1 col-xs-2">
-                  <img alt="Img" src="/img/kim.jpg">
+                  <img alt="Img" src="{{answer.owner.get_avatar}}">
                   <input class="number-input" id="movie" type="number" value="{{answer.likes}}"/>
                 </div>
                 <div class="col-md-10 col-xs-10 answer-text">
