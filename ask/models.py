@@ -119,6 +119,48 @@ class LikeToQuestionManager(models.Manager):
         question.save()
         return new
 
+# class AnswerQuerySet(models.QuerySet):
+#     # loads author
+#     def with_author(self):
+#         return self.select_related('author').select_related('author__profile')
+
+#     # loads question
+#     def with_question(self):
+#         return self.select_related('question')
+
+#     # order by popularity
+#     def order_by_popularity(self):
+#         return self.order_by('-likes')
+
+#     # filter by date
+#     def with_date_greater(self, date):
+#         return self.filter(date__gt=date)
+
+# class AnswerManager(models.Manager):
+#     # custom query set
+#     def get_queryset(self):
+#         res = AnswerQuerySet(self.model, using=self._db)
+#         return res.with_author()
+
+#     # create
+#     def create(self, **kwargs):
+#         ans = super(AnswerManager, self).create(**kwargs);
+        
+#         text = ans.text[:100]
+#         if len(ans.text) > 100:
+#             text += '...'
+
+#         helpers.comet_send_message(
+#                 helpers.comet_channel_id_question(ans.question),
+#                 u'New Answer (' + ans.author.last_name + ' ' + ans.author.first_name + '): ' + text 
+#                 )
+#         return ans
+
+#     # best answers
+#     def get_best(self):
+#         week_ago = timezone.now() + datetime.timedelta(-7)
+# return self.get_queryset().order_by_popularity().with_date_greater(week_ago)
+
 # TODO Answer manager
 class Answer(models.Model):
     owner = models.ForeignKey(Profile)

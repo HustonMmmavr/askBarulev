@@ -2,20 +2,15 @@ from ask.models import Tag, User, Profile, Question, Answer, LikeToQuestion, Lik
 import random
 import os
 
-def generate_users(cnt):#, names, surnames):
+def generate_users(cnt):
 	names = ['john', 'peter', 'kolya', 'misha', 'pasha', 'ilja', 'trump', 'derek']
 	snames = ['obama', 'trum', 'ivanov' , 'prtrov', 'lomov', 'morgan']
 	mails = ['ya', 'ma', 'go']
 	nsize = len(names)
 	ssize = len(snames)
 	msize = len(mails)
-	# print('a')
 	imgs = os.listdir('/home/comp/askBarulev/scripts/test_img')
 	imgsc = len(imgs)
-	# print(imgs)
-	#u = Profile.objects.all()
-	#for t in u:
-	#	print(t.avatar)
 	for i in range(0,cnt):
 		print(i)
 		fname = names[random.randint(0, nsize-1)]
@@ -23,23 +18,20 @@ def generate_users(cnt):#, names, surnames):
 		email = names[random.randint(0, nsize - 1)] + '@' + mails[random.randint(0, msize - 1)] + '.ru'
 		pwd = str(random.randint(10000,1000000))
 		u = User()
-		u.username = fname + ' ' + sname + str(i)#data.get('username')
-		u.password = pwd#make_password(password)
-		u.email = email#data.get('email')
-		u.first_name = fname#data.get('first_name')
-		u.last_name = sname#data.get('last_name')
+		u.username = fname + ' ' + sname + str(i)
+		u.password = pwd
+		u.email = email
+		u.first_name = fname
+		u.last_name = sname
 		u.is_active = True
 		u.is_superuser = False
 		u.save()
 
 		img = imgs[random.randint(0, imgsc - 1)]
 		print(img)
-		#f = open('/home/comp/askBarulev/scripts/test_img/' + img, "r")
-
-		#login = 'login'
-		p = Profile(user=u, avatar=img)#User(use=name, password=pwd, image=img, email=email, login=login)
+		p = Profile(user=u, avatar=img)
 		p.save()
-		print(p.avatar)	# print('use')
+		print(p.avatar)	
 
 def generate_questions(n):
 	arr = open('/home/comp/askBarulev/scripts/text.txt', 'r').read().split(' ')
@@ -68,20 +60,9 @@ def generate_questions(n):
 			q.tags.add(tq)
 	print('que')
 
-#36
-		# print(own)
-		#or el in own:
-		#	print(el)
-		# print(own.id)
-	#for u in User.objects.all():
-	#	print(u.nick)
-		
-
 def generate_answers(n):
-	#for u in User.objects.all()[0]:
-	#	print(u.nick)
 	arr = open('/home/comp/askBarulev/scripts/text.txt', 'r').read().split(' ')
-	asize = len(arr)#.size()
+	asize = len(arr)
 	ucount = Profile.objects.count()
 	qcount = Question.objects.count()
 
@@ -112,7 +93,6 @@ def generate_answer_likes(n):
 		a = Answer.objects.filter(id=random.randint(1, answers))[0]
 		al = LikeToAnswer(answer=a, owner=u, value=arr[idx])
 		LikeToAnswer.objects.add_or_update(u, a, arr[idx])
-		#al.save()
 	print('al')
 
 
@@ -126,14 +106,12 @@ def generate_question_likes(n):
 		u = Profile.objects.filter(id=random.randint(1, users))[0]
 		a = Question.objects.filter(id=random.randint(1, questions))[0]
 		al = LikeToQuestion(question=a, owner=u, value=arr[idx])
-		LikeToQuestion.objects.add_or_update(u, a, arr[idx])
-		#al.save()
 	print('aq')
 
 
 def generate_tags(n):
 	arr = open('/home/comp/askBarulev/scripts/tags', 'r').read().split('\n')
-	asize = len(arr)#.size()
+	asize = len(arr)
 	for i in range(0, asize):
 		t = Tag(title=arr[i])
 		print(t.title)
@@ -143,10 +121,6 @@ def generate_tags(n):
 
 def run():
 	try:
-		#i = 0
-		#while i < 10:
-		#	print(random.randint(0,1))
-		#generate_users(100)
 		generate_tags(125)
 		generate_questions(150)
 		generate_answers(210)
