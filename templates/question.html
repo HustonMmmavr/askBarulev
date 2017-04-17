@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 {% block content %}  
 
-      <h1> How to build a moon park </h1>
+      <h1> {{question.title}} </h1>
         <section class="col-md-9">          
           <div class="martop15">
             <div class="answer-area pad0">
+              <div class="col-xs-1 col-sm-1" style="padding:0px; width:auto">
+                <div><a style="font-size: 32px; color:grey" href="#" class="glyphicon glyphicon-triangle-top"></a></div>
+                <div align=center style="font-size: 18px; color:grey" >{{question.likes}}</div>
+                <div><a style="font-size: 32px; color:grey" href="#" class="glyphicon glyphicon-triangle-bottom"></a></div>  
+              </div>
               <div class="answer-block padtopbot15">
               <div class="answer-info col-xs-2 col-md-1">
                   <img alt="Img" src="{{question.owner.get_avatar}}">
-                <input class="number-input" id="movie" type="number" value="{{question.likes}}"/>
+                <!-- <input class="number-input" id="movie" type="number" value="{{question.likes}}"/> -->
               </div>
-              <div class="col-md-10 col-xs-10 answer-text">
+              <div class="col-md-9 col-xs-9 answer-text">
                 <a href={%url 'question-url' question_number=question.id %} class>{{question.title}}</a>
                 <div class="main-info-answer">
                   <p>{{question.text}} </p>
@@ -28,13 +33,18 @@
 
           {% for answer in question.answer_set.all%}
 
-            <div class="martop15">
-              <div class="answer-block bordered">
+            <div class="martop15 bordered">
+            <div class="col-xs-1 col-sm-1" style="padding:0px; padding-bottom:15px;padding-left: 3px; width:auto">
+                  <div><a style="font-size: 32px; color:grey" href="#" class="glyphicon glyphicon-triangle-top"></a></div>
+                  <div align=center style="font-size: 18px; color:grey" >{{question.likes}}</div>
+                  <div><a style="font-size: 32px; color:grey" href="#" class="glyphicon glyphicon-triangle-bottom"></a></div>  
+              </div>
+              <div class="answer-block">
                 <div class="answer-info col-md-1 col-xs-2">
                   <img alt="Img" src="{{answer.owner.get_avatar}}">
-                  <input class="number-input" id="movie" type="number" value="{{answer.likes}}"/>
+                  <!-- <input class="number-input" id="movie" type="number" value="{{answer.likes}}"/> -->
                 </div>
-                <div class="col-md-10 col-xs-10 answer-text">
+                <div class="col-md-9 col-xs-9 answer-text">
                   <div class="main-info-answer"><p>{{answer.text}}</p></div>
                     <div class="checkbo-left">
                       <label><input type="checkbox" value="{{answer.correct}}">Correct!</label>
