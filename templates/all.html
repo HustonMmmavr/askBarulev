@@ -6,13 +6,18 @@
         </h1>
         <section class="col-md-9">
 	     	{% for question in  questions %}
-		         <div class="martop15">
+		         <div class="martop15 bordered">
+	         	 	<div class="col-xs-1 col-sm-1 likes">
+	                	<div><a href="#" class="glyphicon glyphicon-triangle-top font32 grey"></a></div>
+	                	<div align=center class="font18 grey" >{{question.likes}}</div>
+	                <div><a href="#" class="glyphicon glyphicon-triangle-bottom font32 grey"></a></div>  
+	              </div>
 		            <div class="question-block">
 		              <div class="question-info col-md-1 col-xs-2">
                 		<img alt="{{question.owner.get_avatar}}" src="{{question.owner.get_avatar}}">
-		                <input class="number-input" id="movie" type="number" value="{{question.likes}}"/> <!-- TODO not input -->
+		                <!-- <input class="number-input" id="movie" type="number" value="{{question.likes}}"/> -->
 		              </div>
-		              <div class="col-md-10 col-xs-10 question-text">
+		              <div class="col-md-9 col-xs-9 question-text">
 		                <a href={% url 'question-url' question_number=question.id %} class> {{question.title}}</a>
 		                <div class="main-info">{{question.text}}</div>
 		                <div class="other-info"> 

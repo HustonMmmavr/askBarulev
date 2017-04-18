@@ -5,10 +5,10 @@
         <section class="col-md-9">          
           <div class="martop15">
             <div class="answer-area pad0">
-              <div class="col-xs-1 col-sm-1" style="padding:0px; width:auto">
-                <div><a style="font-size: 32px; color:grey" href="#" class="glyphicon glyphicon-triangle-top"></a></div>
-                <div align=center style="font-size: 18px; color:grey" >{{question.likes}}</div>
-                <div><a style="font-size: 32px; color:grey" href="#" class="glyphicon glyphicon-triangle-bottom"></a></div>  
+              <div class="col-xs-1 col-sm-1 likes">
+                <div><a href="#" class="glyphicon glyphicon-triangle-top font32 grey"></a></div>
+                <div align=center class="font18 grey" >{{question.likes}}</div>
+                <div><a href="#" class="glyphicon glyphicon-triangle-bottom font32 grey"></a></div>  
               </div>
               <div class="answer-block padtopbot15">
               <div class="answer-info col-xs-2 col-md-1">
@@ -34,10 +34,10 @@
           {% for answer in question.answer_set.all%}
 
             <div class="martop15 bordered">
-            <div class="col-xs-1 col-sm-1" style="padding:0px; padding-bottom:15px;padding-left: 3px; width:auto">
-                  <div><a style="font-size: 32px; color:grey" href="#" class="glyphicon glyphicon-triangle-top"></a></div>
-                  <div align=center style="font-size: 18px; color:grey" >{{question.likes}}</div>
-                  <div><a style="font-size: 32px; color:grey" href="#" class="glyphicon glyphicon-triangle-bottom"></a></div>  
+              <div class="col-xs-1 col-sm-1 likes">
+                <div><a href="#" class="glyphicon glyphicon-triangle-top font32 grey"></a></div>
+                <div align=center class="font18 grey" >{{question.likes}}</div>
+                <div><a href="#" class="glyphicon glyphicon-triangle-bottom font32 grey"></a></div>  
               </div>
               <div class="answer-block">
                 <div class="answer-info col-md-1 col-xs-2">
