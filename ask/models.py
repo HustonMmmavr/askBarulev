@@ -68,7 +68,6 @@ class QuestionManager(models.Manager):
 
     def init(self):
         self.qs = self.get_queryset()
-        # print(self.qs)
         return self
 
     def get_query(self):
@@ -85,7 +84,6 @@ class QuestionManager(models.Manager):
 
     # loads author
     def add_author(self):
-        print(self.qs)
         self.qs.select_related('owner').select_related('owner__user')
         return self
  
@@ -102,7 +100,6 @@ class QuestionManager(models.Manager):
 
     # single question
     def get_single(self, id_):
-        # res = self.get_queryset()
         return self.init().add_author().add_answers().add_tags().get(id=id_)
 
     # best questions
@@ -189,7 +186,6 @@ class AnswerManager(models.Manager):
 #         week_ago = timezone.now() + datetime.timedelta(-7)
 # return self.get_queryset().order_by_popularity().with_date_greater(week_ago)
 
-# TODO Answer manager
 class Answer(models.Model):
     owner = models.ForeignKey(Profile)
     question = models.ForeignKey(Question)
