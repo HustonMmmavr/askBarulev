@@ -18,9 +18,9 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **options):
 		tags = [
-			'javascript', 'java', 'c#', 'php', 'android', 'jquery', 'python',
-			'html', 'css', 'c++', 'ios', 'mysql', 'objective-c', 'sql', 'asp.net',
-			'ruby-on-rails', 'iphone', 'angularjs', 'regexp'
+			'javascript', 'java', 'cshp', 'php', 'android', 'jquery', 'python',
+			'html', 'css', 'cpp', 'ios', 'mysql', 'objective_c', 'sql', 'asp_net',
+			'ruby_on_rails', 'iphone', 'angularjs', 'regexp'
 		]
 
 		number = int(options['number'])
