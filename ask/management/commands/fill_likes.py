@@ -29,15 +29,16 @@ class Command(BaseCommand):
 
         users = Profile.objects.all()
         questions = Question.objects.all()
-
-        # for q in questions:
-        #     self.stdout.write('question [%d]' % q.id)
-        #     for i in range(0, number_questions):
-        #         LikeToQuestion.objects.add_or_update(
-        #                 owner=choice(users),
-        #                 question=q,
-        #                 value=choice([-1, 1])
-        #                 )
+        self.stdout.write(str(number_questions) + " " + str(questions.count()))
+        for q in questions:
+            print(q)
+            self.stdout.write('question [%d]' % q.id)
+            for i in range(0, number_questions):
+                LikeToQuestion.objects.add_or_update(
+                        owner=choice(users),
+                        question=q,
+                        value=choice([-1, 1])
+                        )
 
         answers = Answer.objects.all()
 

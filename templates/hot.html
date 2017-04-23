@@ -13,7 +13,6 @@
                 <div class="question-block">
                   <div class="question-info col-md-1 col-xs-2">
                     <img alt="Img" src="{{question.owner.get_avatar}}"> <!-- TODO -->
-                    <input class="number-input" id="movie" type="number" value="{{question.likes}}"/> <!-- TODO not input -->
                   </div>
                   <div class="col-md-9 col-xs-9 question-text">
                     <a href={% url 'question-url' question_number=question.id %} class> {{question.title}}</a>
