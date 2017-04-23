@@ -59,8 +59,8 @@ class Tag(models.Model):
 #     def with_author(self):
 #         return self.select_related('owner').select_related('owner__user')
 
-    # loads number of answers
-    # def with_answers_count(self):
+#    # loads number of answers
+#    # def with_answers_count(self):
         # return self.annotate(answers_count=Count('answer__id', distinct=True))
 
 class QuestionManager(models.Manager):
@@ -119,9 +119,7 @@ class Question(models.Model):
     likes = models.IntegerField(default=0)
     answers_cnt = models.IntegerField(default = 0)
 
-    objects = QuestionManager()#.init()#.append_data()#.append_data()
-   #class Meta:
-    #@    ordering = ['-date']
+    objects = QuestionManager()
 
 
 class LikeToQuestionManager(models.Manager):
@@ -173,7 +171,7 @@ class AnswerManager(models.Manager):
         return self.filter(question=question)
 
     def sum_for_question(self, question):
-        res = self.has_question(question).count()#aggregate(Count('answer__id', dstinct=True))
+        res = self.has_question(question).count()
         return res if res else 0
 
     # create
@@ -195,7 +193,7 @@ class AnswerManager(models.Manager):
 class Answer(models.Model):
     owner = models.ForeignKey(Profile)
     question = models.ForeignKey(Question)
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=150)
     text = models.TextField()
     date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)
@@ -211,8 +209,6 @@ class LikeToQuestion(models.Model):
     value = models.SmallIntegerField(default=1)
     objects = LikeToQuestionManager()
 
-# TODO Generate tags without repaea
-# TODO likes
 class LikeToAnswerManager(models.Manager):
     def has_answer(self, answer):
         return self.filter(answer=answer)

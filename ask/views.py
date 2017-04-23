@@ -91,7 +91,6 @@ def question(request, question_number):
 	return render(request, 'question.html', {'question': q})
 
 def all(request, page_num=1):
-	questions = Question.objects.list_ordered_date()#init().get_query()#.add_author().add_tags().get_qeury()#all()#.append_author()#.append_answers_count()
-	print(questions)
+	questions = Question.objects.list_ordered_date()
 	questions, page_range = paginate(questions, 5, page_num, 5)
 	return render(request, 'all.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'all-url'})
