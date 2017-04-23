@@ -35,57 +35,80 @@ class Tag(models.Model):
     objects=TagManager()
 
 
-class QuestionQuerySet(models.QuerySet):
-    # preloads tags
-    def with_tags(self):
-        return self.prefetch_related('tags')
+# class QuestionQuerySet(models.QuerySet):
+#     # preloads tags
+#     def with_tags(self):
+#         return self.prefetch_related('tags')
 
-    # preloads answers
-    def with_answers(self):
-        res = self.prefetch_related('answer_set')
-        #res = self.prefetch_related('answer_set__author')
-       # res = self.prefetch_related('answer_set__author__user')
-        return res
 
-    def order_by_popularity(self):
-        return self.order_by('-likes')
+#     # preloads answers
+#     def with_answers(self):
+#         res = self.prefetch_related('answer_set')
+#         #res = self.prefetch_related('answer_set__author')
+#        # res = self.prefetch_related('answer_set__author__user')
+#         return res
+
+#     def order_by_popularity(self):
+#         return self.order_by('-likes')
+
+#     # loads number of answers
+#     def with_answers_count(self):
+#         return self.annotate(answers_count=Count('answer__id', distinct=True))
+
+#     # loads author
+#     def with_author(self):
+#         return self.select_related('owner').select_related('owner__user')
 
     # loads number of answers
-    def with_answers_count(self):
-        return self.annotate(answers_count=Count('answer__id', distinct=True))
-
-    # loads author
-    def with_author(self):
-        return self.select_related('owner').select_related('owner__user')
-
-
+    # def with_answers_count(self):
+        # return self.annotate(answers_count=Count('answer__id', distinct=True))
 
 class QuestionManager(models.Manager):
-    def get_queryset(self):
-        qs = QuestionQuerySet(self.model, using=self._db)
-        return qs.with_tags().with_answers_count().with_author()
+    qs = None
 
-    # list of new questions
-    def list_new(self):
-        return self.order_by('-date')
+    def init(self):
+        self.qs = self.get_queryset()
+        # print(self.qs)
+        return self
 
+    def get_query(self):
+        return self.qs
+
+    def add_tags(self):
+        self.qs.prefetch_related('tags')
+        return self
+
+    # preloads answers
+    def add_answers(self):
+        self.qs.prefetch_related('answer_set')
+        return self
+
+    # loads author
+    def add_author(self):
+        print(self.qs)
+        self.qs.select_related('owner').select_related('owner__user')
+        return self
+ 
     # list of hot questions
     def list_hot(self):
-        return self.order_by('-likes')
+        return self.init().add_tags().add_author().get_query().order_by('-likes')
 
+    def list_ordered_date(self):
+        return self.init().add_tags().add_author().order_by('-date')
+    
     # list of questions with tag
     def list_tag(self, tag):
-        return self.filter(tags=tag)
+        return self.init().add_tags().add_author().filter(tags=tag).order_by('-date')
 
     # single question
     def get_single(self, id_):
-        res = self.get_queryset()
-        return res.with_answers().get(id=id_)
+        # res = self.get_queryset()
+        return self.init().add_author().add_answers().add_tags().get(id=id_)
 
     # best questions
-    def get_best(self):
-        week_ago = timezone.now() + datetime.timedelta(-7)
-        return self.get_queryset().order_by_popularity().with_date_greater(week_ago)
+    # def get_best(self):
+        # week_ago = timezone.now() + datetime.timedelta(-7)
+        # return self.get_queryset().order_by_popularity().with_date_greater(week_ago)
 
 class Question(models.Model):
     owner = models.ForeignKey(Profile)
@@ -94,10 +117,11 @@ class Question(models.Model):
     date = models.DateTimeField(default=timezone.now)
     tags = models.ManyToManyField(Tag)
     likes = models.IntegerField(default=0)
+    answers_cnt = models.IntegerField(default = 0)
 
-    objects = QuestionManager()#.append_data()#.append_data()
-    class Meta:
-        ordering = ['-date']
+    objects = QuestionManager()#.init()#.append_data()#.append_data()
+   #class Meta:
+    #@    ordering = ['-date']
 
 
 class LikeToQuestionManager(models.Manager):
@@ -139,25 +163,28 @@ class LikeToQuestionManager(models.Manager):
 #     def with_date_greater(self, date):
 #         return self.filter(date__gt=date)
 
-# class AnswerManager(models.Manager):
-#     # custom query set
-#     def get_queryset(self):
-#         res = AnswerQuerySet(self.model, using=self._db)
-#         return res.with_author()
+class AnswerManager(models.Manager):
+    # # custom query set
+    # def get_queryset(self):
+    #     res = AnswerQuerySet(self.model, using=self._db)
+    #     return res.with_author()
 
-#     # create
-#     def create(self, **kwargs):
-#         ans = super(AnswerManager, self).create(**kwargs);
-        
-#         text = ans.text[:100]
-#         if len(ans.text) > 100:
-#             text += '...'
+    def has_question(self, question):
+        return self.filter(question=question)
 
-#         helpers.comet_send_message(
-#                 helpers.comet_channel_id_question(ans.question),
-#                 u'New Answer (' + ans.author.last_name + ' ' + ans.author.first_name + '): ' + text 
-#                 )
-#         return ans
+    def sum_for_question(self, question):
+        res = self.has_question(question).count()#aggregate(Count('answer__id', dstinct=True))
+        return res if res else 0
+
+    # create
+    def create(self, **kwargs):
+        ans = super(AnswerManager, self).create(**kwargs);
+        #print('a')
+        ans.question.answers_cnt = self.sum_for_question(ans.question)
+        #print('b')
+        ans.question.save()
+        #print('c')
+        return ans
 
 #     # best answers
 #     def get_best(self):
@@ -173,6 +200,7 @@ class Answer(models.Model):
     date = models.DateTimeField(default=timezone.now)
     likes = models.IntegerField(default=0)
     correct = models.BooleanField(default=False)
+    objects = AnswerManager()
 
 class LikeToQuestion(models.Model):
     UP = 1
@@ -205,8 +233,6 @@ class LikeToAnswerManager(models.Manager):
         answer.likes = self.sum_for_answer(answer)
         answer.save()
         return new
-
-
 
 class LikeToAnswer(models.Model):
     UP = 1

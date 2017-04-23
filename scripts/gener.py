@@ -28,10 +28,10 @@ def generate_users(cnt):
 		u.save()
 
 		img = imgs[random.randint(0, imgsc - 1)]
-		print(img)
+		#print(img)
 		p = Profile(user=u, avatar=img)
 		p.save()
-		print(p.avatar)	
+		#print(p.avatar)	
 
 def generate_questions(n):
 	arr = open('/home/comp/askBarulev/scripts/text.txt', 'r').read().split(' ')
@@ -54,9 +54,9 @@ def generate_questions(n):
 		tag_cnt = random.randint(1, 5)
 		print(tag_cnt)
 		for j in range(0,tag_cnt):
-			print(j)
+			#print(j)
 			tq = Tag.objects.filter(id=random.randint(1, tag_table_cnt))[0]
-			print(tq.title)
+			#print(tq.title)
 			q.tags.add(tq)
 	print('que')
 
@@ -77,8 +77,9 @@ def generate_answers(n):
 			text += arr[random.randint(0,(asize-1))] + ' '
 
 		q = Question.objects.filter(id=random.randint(1, qcount))[0]
-		a = Answer(owner=own, question=q, title=title,text=text)
-		a.save()
+		# a = Answer(owner=own, question=q, title=title,text=text)
+		Answer.objects.create(owner=own, question=q, title=title,text=text)
+		# a.save()
 	print('ans')
 
 def generate_answer_likes(n):
@@ -106,6 +107,8 @@ def generate_question_likes(n):
 		u = Profile.objects.filter(id=random.randint(1, users))[0]
 		a = Question.objects.filter(id=random.randint(1, questions))[0]
 		al = LikeToQuestion(question=a, owner=u, value=arr[idx])
+		LikeToQuestion	.objects.add_or_update(u, a, arr[idx])
+
 	print('aq')
 
 
@@ -121,7 +124,8 @@ def generate_tags(n):
 
 def run():
 	try:
-		generate_tags(125)
+		generate_users(100)
+		generate_tags(10)
 		generate_questions(150)
 		generate_answers(210)
 		generate_answer_likes(350)

@@ -21,7 +21,7 @@
 		                <a href={% url 'question-url' question_number=question.id %} class> {{question.title}}</a>
 		                <div class="main-info">{{question.text}}</div>
 		                <div class="other-info"> 
-		                  <span class="answer"> <a href={% url 'question-url' question_number=question.id %}> answer ({{question.answers_count}}) </a> </span> 
+		                  <span class="answer"> <a href={% url 'question-url' question_number=question.id %}> answer ({{question.answers_cnt}}) </a> </span> 
 		                  <span class="tags">Tags:
 		                  {% for tag in question.tags.all %}
 	                      	<a href={% url 'tag-url' tag_name=tag.title %}> {{tag.title}}</a>
