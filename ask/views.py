@@ -45,10 +45,6 @@ def settings(request):
 
 
 
-#TODO try 
-#and send url to paginator
-
-
 def paginate(objects, count_on_page, page_num, pages_to_show):
 	paginator = Paginator(objects, count_on_page)
 	interval = int(pages_to_show / 2) + 1
