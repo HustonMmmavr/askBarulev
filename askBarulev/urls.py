@@ -17,7 +17,6 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.conf import settings
 from ask import views
-#from . import contr
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -31,10 +30,10 @@ urlpatterns = [
     url(r'^signup/', views.signup, name='signup-url'),
     url(r'^ask/', views.ask, name='ask-url'),
     url(r'^settings/', views.settings, name='settings-url'),
-    url(r'^question/(?P<question_number>[0-9]+)/', views.question, name='question-url'),
-    url(r'^all/(?P<page_num>[0-9]+)/', views.all, name='all-url'),
+    url(r'^question/(?P<question_number>\w+)/', views.question, name='question-url'),
+    url(r'^all/(?P<page_num>\w+)/', views.all, name='all-url'),
     url(r'^all/', views.all, name='all-url'),
+    url(r'^(?P<page_num>\w+)/', views.all, name='all-url'),
     url(r'^$', views.all,  name='all-url'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-#+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

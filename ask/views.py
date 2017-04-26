@@ -1,5 +1,4 @@
-#from cgi import parse_qsl
-# from django import http
+
 from django.http import HttpResponse, Http404
 from  django.template import loader
 from django.template import Template
@@ -56,14 +55,17 @@ def paginate(objects, count_on_page, page_num, pages_to_show):
 	
 	try:
 		num_page = int(page_num)
+	except ValueError:
+		num_page = 1
 	except PageNotAnInteger:
 		num_page = 1
-
+	if num_page < 1:
+		num_page = 1
 	if num_page > paginator.num_pages:
 		num_page = paginator.num_pages
 	
 	paginated = paginator.page(num_page)
-	min_idx = 0 if (int(num_page) - interval < 0) else int(num_page) - interval
+	min_idx = 0 if (num_page - interval < 0) else num_page - interval
 	max_idx =  num_page + interval if (num_page + interval < paginator.num_pages) else paginator.num_pages
 	page_range = paginator.page_range[min_idx:max_idx]
 	return paginated, page_range
@@ -71,7 +73,7 @@ def paginate(objects, count_on_page, page_num, pages_to_show):
 
 def hot(request, page_num=1):
 	questionsObjs = Question.objects.list_hot()
-	questions, page_range = paginate(questionsObjs, 5, int(page_num), 5)
+	questions, page_range = paginate(questionsObjs, 5, page_num, 5)
 	return render(request, 'hot.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'hot-url'}) 
 
 def tag(request, tag_name, page_num=1):
@@ -80,13 +82,15 @@ def tag(request, tag_name, page_num=1):
 	except Tag.DoesNotExist:
 		raise Http404()
 	questionsObjs = Question.objects.list_tag(tag)
-	questions, page_range = paginate(questionsObjs, 5, int(page_num), 5)
+	questions, page_range = paginate(questionsObjs, 5, page_num, 5)
 	return render(request, 'tag.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'tag-url', 'tag': tag}) 
 
 def question(request, question_number):
 	try:
 		q = Question.objects.get_single(int(question_number))
 	except Question.DoesNotExist:
+		raise Http404()
+	except ValueError:
 		raise Http404()
 	return render(request, 'question.html', {'question': q})
 
