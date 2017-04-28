@@ -5,6 +5,8 @@ from django.template import Template
 from django.shortcuts import render, render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ask.models import Question, Profile, Answer, LikeToQuestion, LikeToAnswer, Tag
+from ask.form import LoginForm, SignupForm
+from ask.decorators import need_login
 
 def main( wsgi_request):
     resp = ['<p>I Like ruby!</p>']
@@ -29,8 +31,28 @@ def main( wsgi_request):
                 resp.append(''.join(arr))
     return HttpResponse(resp)
 
-def login(request):
-	return render(request, 'login.html')
+# def login(request):
+# 	return render(request, 'login.html')
+
+@need_login
+def form_login(request):
+    #redirect = request.GET.get('continue', '/')
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/all/1/')
+
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+
+        if form.is_valid():
+            auth.login(request, form.cleaned_data['user'])
+            print('a')
+            return HttpResponseRedirect('/all/1/')
+    else:
+        form = LoginForm()
+
+    return render(request, 'login.html', {
+            'form': form,
+})
 
 def signup(request):
 	return render(request, 'signup.html') 

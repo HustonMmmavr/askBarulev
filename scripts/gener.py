@@ -18,7 +18,7 @@ def generate_users(cnt):
 		email = names[random.randint(0, nsize - 1)] + '@' + mails[random.randint(0, msize - 1)] + '.ru'
 		pwd = str(random.randint(10000,1000000))
 		u = User()
-		u.username = fname + ' ' + sname + str(i)
+		u.username = fname  + sname + str(i)
 		u.password = pwd
 		u.email = email
 		u.first_name = fname
@@ -124,7 +124,7 @@ def generate_tags(n):
 
 def run():
 	try:
-		#generate_users(100)
+		generate_users(100)
 		#generate_tags(10)
 		generate_questions(150)
 		generate_answers(210)

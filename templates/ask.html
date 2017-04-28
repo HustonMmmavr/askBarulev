@@ -5,8 +5,8 @@
 
         <h1>New question </h1>
         <section class="col-md-9">
-          <form role="form">
-            
+          <form role="form" method="post">
+            {% csrf_token %}
             <div class="input-group martop15">
               <span class="input-group-addon form-span" id="sizing-addon1">Title   </span>
               <input type="text" class="form-control" placeholder="" aria-describedby="sizing-addon">
