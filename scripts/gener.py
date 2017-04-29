@@ -125,7 +125,7 @@ def generate_tags(n):
 def run():
 	try:
 		generate_users(100)
-		generate_tags(10)
+		#generate_tags(10)
 		generate_questions(150)
 		generate_answers(210)
 		generate_answer_likes(350)

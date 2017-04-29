@@ -12,7 +12,7 @@
               </div>
               <div class="answer-block padtopbot15">
               <div class="answer-info col-xs-2 col-md-1">
-                  <img alt="Img" src="{{question.owner.get_avatar}}">
+                  <img alt="img" src="{{MEDIA_URL}}{{question.owner.get_avatar}}">
               </div>
               <div class="col-md-9 col-xs-9 answer-text">
                 <a href={%url 'question-url' question_number=question.id %} class>{{question.title}}</a>
@@ -40,7 +40,7 @@
               </div>
               <div class="answer-block">
                 <div class="answer-info col-md-1 col-xs-2">
-                  <img alt="Img" src="{{answer.owner.get_avatar}}">
+                  <img alt="img" src="{{MEDIA_URL}}{{answer.owner.get_avatar}}">
                   <!-- <input class="number-input" id="movie" type="number" value="{{answer.likes}}"/> -->
                 </div>
                 <div class="col-md-9 col-xs-9 answer-text">

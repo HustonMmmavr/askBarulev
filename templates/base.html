@@ -63,7 +63,7 @@
               <li class="user dropdown">
 
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                  <img alt="Img" src="{{request.session.img}}"> {{request.user.username}}
+                  <img alt="img" src="{{MEDIA_URL}}{{request.session.img}}"> {{request.user.username}}
                 </a>
             
                 <ul class="dropdown-menu user-menu">

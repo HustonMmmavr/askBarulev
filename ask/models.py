@@ -20,7 +20,7 @@ class Profile(models.Model):
 
     def get_avatar(self):
         #print(self.avatar)
-        return '/uploads/'+ str(self.avatar)
+        return str(self.avatar)
 
 class TagManager(models.Manager):
     # searches using title

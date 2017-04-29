@@ -36,5 +36,5 @@ urlpatterns = [
     url(r'^all/', views.all, name='all-url'),
     url(r'^(?P<page_num>\w+)/', views.all, name='all-url'),
     url(r'^$', views.all,  name='all-url'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
