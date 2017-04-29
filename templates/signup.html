@@ -2,52 +2,66 @@
 {% block content %}
 	<h1> Registration </h1>
         <section class="col-md-9">
-          <form role="form" data-toggle="validator">
-
-            <div class="alert alert-danger alert-dismissible" role="alert">
+          <form role="form" data-toggle="validator" method="post">
+              {% csrf_token %}
+              {%if form.non_field_errors.as_text %}
+               <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>{{ form.non_field_errors.as_text }} </strong>
+              </div> 
+              {%endif%}
+        <!--     <div class="alert alert-danger alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <strong>Error!</strong> This niname is used already.
+            </div> -->
+
+            <div class="form-group martop15 col-md-12 col-xs-12 pad0">
+              <div class="col-md-12 col-xs-12 pad0">
+                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">{{form.login.label}}   </span>
+                <div class="pad0 col-md-9 col-xs-8">
+                  {{form.login}}
+                  <!-- <input type="text"  class="form-control inp-radius" id="exampleTextarea" rows="3"> -->
+                  <div class="help-block with-errors"> </div>
+                </div>
+              </div>
             </div>
 
-            <div class="input-group martop15 col-md-12 col-xs-12 pad0">
+            <div class="for-group martop15 col-md-12 col-xs-12 pad0">
               <div class="col-md-12 col-xs-12 pad0">
-                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">Login   </span>
+                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">{{form.email.label}}   </span>
                 <div class="pad0 col-md-9 col-xs-8">
-                  <input type="text"  class="form-control inp-radius" id="exampleTextarea" rows="3">
+                  {{form.email}}
+                  <!-- <input type="text"  class="form-control inp-radius" id="exampleTextarea" rows="3"> -->
+                  <div class="help-block with-errors"> </div>
                 </div>
               </div>
             </div>
 
             <div class="input-group martop15 col-md-12 col-xs-12 pad0">
               <div class="col-md-12 col-xs-12 pad0">
-                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">Email   </span>
+                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">{{form.nickname.label}}   </span>
                 <div class="pad0 col-md-9 col-xs-8">
-                  <input type="text"  class="form-control inp-radius" id="exampleTextarea" rows="3">
+                  {{form.nickname}}
+                  <!-- <input type="text"  class="form-control inp-radius" id="exampleTextarea" rows="3"> -->
+                  <div class="help-block with-errors"> </div>
+
                 </div>
               </div>
             </div>
 
             <div class="input-group martop15 col-md-12 col-xs-12 pad0">
               <div class="col-md-12 col-xs-12 pad0">
-                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">NickName   </span>
+                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">{{form.password1.label}}   </span>
                 <div class="pad0 col-md-9 col-xs-8">
-                  <input type="text"  class="form-control inp-radius" id="exampleTextarea" rows="3">
+                  {{form.password}}
+                  <!-- <input type="text"  class="form-control inp-radius" id="exampleTextarea" rows="3"> -->
                 </div>
               </div>
             </div>
 
             <div class="input-group martop15 col-md-12 col-xs-12 pad0">
               <div class="col-md-12 col-xs-12 pad0">
-                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">Password   </span>
-                <div class="pad0 col-md-9 col-xs-8">
-                  <input type="text"  class="form-control inp-radius" id="exampleTextarea" rows="3">
-                </div>
-              </div>
-            </div>
-
-            <div class="input-group martop15 col-md-12 col-xs-12 pad0">
-              <div class="col-md-12 col-xs-12 pad0">
-                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">Repeat Password   </span>
+                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">   </span>
                 <div class="pad0 col-md-9 col-xs-8">
                   <input type="text"  class="form-control inp-radius" id="exampleTextarea" rows="3">
                 </div>

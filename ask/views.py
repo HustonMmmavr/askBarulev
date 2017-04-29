@@ -87,37 +87,53 @@ def all(request, page_num=1):
 	questions, page_range = paginate(questions, 5, page_num, 5)
 	return render(request, 'all.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'all-url'})
 
-#@need_login
+@login_required(redirect_field_name='continue')
+def logout(request):
+	redirect = request.GET.get('continue', '/')
+	auth.logout(request)
+	return HttpResponseRedirect(redirect)
+
+def signup(request):
+	if request.user.is_authenticated():
+		request.session['img'] = Profile.objects.filter(id=request.user.id)[0].get_avatar()
+		return HttpResponseRedirect('/')
+	
+	if request.method == "POST":
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			auth.login(request, form.cleaned_data['user'])
+			request.session['img'] = Profile.objects.filter(id=request.user.id)[0].get_avatar()
+			return HttpResponseRedirect('/')
+		else:
+			request.img = None
+			form = LoginForm()
+
+	return render(request, 'login.html', {
+	    'form': form,
+	})
+
 def form_login(request):
+    redirect = request.GET.get('continue', '/')
     if request.user.is_authenticated():
         request.session['img'] = Profile.objects.filter(id=request.user.id)[0].get_avatar()
-
-        return HttpResponseRedirect('/all/1/')
+        return HttpResponseRedirect(redirect)
 
     if request.method == "POST":
         form = LoginForm(request.POST)
-        print(request)
         if form.is_valid():
-            print(request)
             auth.login(request, form.cleaned_data['user'])
             request.session['img'] = Profile.objects.filter(id=request.user.id)[0].get_avatar()
-            return HttpResponseRedirect('/all/1/')
+            return HttpResponseRedirect(redirect)
     else:
-        request.img = None#Profile.objects.filter(id=request.user.id)[0].avatar.name
+        request.img = None
         form = LoginForm()
 
     return render(request, 'login.html', {
             'form': form,
 })
 
-@login_required#(redirect_field_name='/all/1/')
-def logout(request):
-	#redirect = request.GET.get('continue', '/')
-	auth.logout(request)
-	return HttpResponseRedirect('/all/1/')
-
-def signup(request):
-	return render(request, 'signup.html') 
+# def signup(request):
+# 	return render(request, 'signup.html') 
 
 def ask(request):
 	temp = loader.get_template('ask.html')
