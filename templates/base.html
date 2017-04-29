@@ -55,8 +55,27 @@
               </li>
             </ul>
 
-            <!-- <li><a href="#">Log In</a></li> -->
-	          <!--ul class="nav navbar-nav navbar-right uluser">  
+            {% if request.user.is_authenticated %}
+              <ul class="nav navbar-nav navbar-right uluser PadLeft25">
+              <li> 
+                <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-success askBtn" >Ask!</button>
+              </li>
+              <li class="user dropdown">
+
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                  <img alt="Img" src="{{request.session.img}}"> {{request.user.username}}
+                </a>
+            
+                <ul class="dropdown-menu user-menu">
+                  <li> <a href={% url 'settings-url' %}> Settings </a> </li>
+                  <li role="separator" class="divider"></li>
+                  <li> <a href={% url 'log-out' %}> Log Out </a> </li>
+                </ul>
+
+              </li>
+            <ul>
+            {% else %}
+	          <ul class="nav navbar-nav navbar-right uluser">  
         	  <li class="PadLeft25">
             	<a href={% url 'login-url' %} role="button">
              		Log in
@@ -67,32 +86,8 @@
               	Register
               </a>
             </li>
-            </ul-->
-
-            <ul class="nav navbar-nav navbar-right uluser PadLeft25">
-              <li> 
-                <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-success askBtn" >Ask!</button>
-              </li>
-              <li class="user dropdown">
-
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                  <img alt="Img" src="/img/kim.jpg"> User Userv
-                </a>
-            
-                <ul class="dropdown-menu user-menu">
-                  <li> <a href={% url 'settings-url' %}> Settings </a> </li>
-                  <li role="separator" class="divider"></li>
-                  <li> <a href="#"> Log Out </a> </li>
-                </ul>
-
-              </li>
-            <ul>
-
-            <!-- {%ink} -->
-            <!-- {%  block user %} {% endblock %} -->
-            <!-- <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"> Log In</a></li>
-            <ul> -->
+            </ul>
+            {%endif%}
         </div>
       </nav>
       <div class="container col-md-12">

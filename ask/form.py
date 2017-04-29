@@ -17,6 +17,7 @@ class LoginForm(forms.Form):
             max_length=30,
             label=u'Login'
             )
+    print(login)
 
     password = forms.CharField(
             widget=forms.PasswordInput(
@@ -27,10 +28,13 @@ class LoginForm(forms.Form):
     def clean(self):
         data = self.cleaned_data
         user = authenticate(username=data.get('login', ''), password=data.get('password', ''))
-
+        #profile = Profile.objects.get(id=user.id)
         if user is not None:
             if user.is_active:
                 data['user'] = user
+                # print(user.id)
+                # data['img'] = Profile.objects.filter(id=user.id)[0].avatar.name
+                # print(data)
             else:
                 raise forms.ValidationError(u'This user don\'t active')
         else:

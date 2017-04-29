@@ -1,2 +1,28 @@
 TODO 
 3) upload_to need to know
+
+<!-- 
+            <ul class="nav navbar-nav navbar-right uluser PadLeft25">
+              <li> 
+                <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-success askBtn" >Ask!</button>
+              </li>
+              <li class="user dropdown">
+
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                  <img alt="Img" src="/img/kim.jpg"> User Userv
+                </a>
+            
+                <ul class="dropdown-menu user-menu">
+                  <li> <a href={% url 'settings-url' %}> Settings </a> </li>
+                  <li role="separator" class="divider"></li>
+                  <li> <a href="#"> Log Out </a> </li>
+                </ul>
+
+              </li>
+            <ul> -->
+
+            <!-- {%ink} -->
+            <!-- {%  block user %} {% endblock %} -->
+            <!-- <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"> Log In</a></li>
+            <ul> -->

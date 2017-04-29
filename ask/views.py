@@ -1,13 +1,18 @@
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from  django.template import loader
 from django.template import Template
 from django.shortcuts import render, render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ask.models import Question, Profile, Answer, LikeToQuestion, LikeToAnswer, Tag
 from ask.form import LoginForm, SignupForm
+from django.contrib.auth import authenticate
+from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from ask.decorators import need_login
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def main( wsgi_request):
     resp = ['<p>I Like ruby!</p>']
     print(wsgi_request)
@@ -30,41 +35,6 @@ def main( wsgi_request):
                 arr = (item, '=', wsgi_request.POST[item],'<br>')
                 resp.append(''.join(arr))
     return HttpResponse(resp)
-
-# def login(request):
-# 	return render(request, 'login.html')
-
-@need_login
-def form_login(request):
-    #redirect = request.GET.get('continue', '/')
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('/all/1/')
-
-    if request.method == "POST":
-        form = LoginForm(request.POST)
-
-        if form.is_valid():
-            auth.login(request, form.cleaned_data['user'])
-            print('a')
-            return HttpResponseRedirect('/all/1/')
-    else:
-        form = LoginForm()
-
-    return render(request, 'login.html', {
-            'form': form,
-})
-
-def signup(request):
-	return render(request, 'signup.html') 
-
-def ask(request):
-	temp = loader.get_template('ask.html')
-	return render(request, 'ask.html')
-
-def settings(request):
-	return render(request, 'settings.html')
-
-
 
 
 def paginate(objects, count_on_page, page_num, pages_to_show):
@@ -116,3 +86,42 @@ def all(request, page_num=1):
 	questions = Question.objects.list_ordered_date()
 	questions, page_range = paginate(questions, 5, page_num, 5)
 	return render(request, 'all.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'all-url'})
+
+#@need_login
+def form_login(request):
+    if request.user.is_authenticated():
+        request.session['img'] = Profile.objects.filter(id=request.user.id)[0].get_avatar()
+
+        return HttpResponseRedirect('/all/1/')
+
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        print(request)
+        if form.is_valid():
+            print(request)
+            auth.login(request, form.cleaned_data['user'])
+            request.session['img'] = Profile.objects.filter(id=request.user.id)[0].get_avatar()
+            return HttpResponseRedirect('/all/1/')
+    else:
+        request.img = None#Profile.objects.filter(id=request.user.id)[0].avatar.name
+        form = LoginForm()
+
+    return render(request, 'login.html', {
+            'form': form,
+})
+
+@login_required#(redirect_field_name='/all/1/')
+def logout(request):
+	#redirect = request.GET.get('continue', '/')
+	auth.logout(request)
+	return HttpResponseRedirect('/all/1/')
+
+def signup(request):
+	return render(request, 'signup.html') 
+
+def ask(request):
+	temp = loader.get_template('ask.html')
+	return render(request, 'ask.html')
+
+def settings(request):
+	return render(request, 'settings.html')

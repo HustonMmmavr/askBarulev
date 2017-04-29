@@ -19,6 +19,7 @@ class Profile(models.Model):
     info = models.TextField(default='mm')
 
     def get_avatar(self):
+        #print(self.avatar)
         return '/uploads/'+ str(self.avatar)
 
 class TagManager(models.Manager):

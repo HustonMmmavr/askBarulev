@@ -19,7 +19,7 @@ def generate_users(cnt):
 		pwd = str(random.randint(10000,1000000))
 		u = User()
 		u.username = fname  + sname + str(i)
-		u.password = pwd
+		u.set_password('123')
 		u.email = email
 		u.first_name = fname
 		u.last_name = sname
@@ -125,7 +125,7 @@ def generate_tags(n):
 def run():
 	try:
 		generate_users(100)
-		#generate_tags(10)
+		generate_tags(10)
 		generate_questions(150)
 		generate_answers(210)
 		generate_answer_likes(350)
