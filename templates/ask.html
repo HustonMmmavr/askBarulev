@@ -2,9 +2,9 @@
 {% block content %}
 
         <!-- new question -->
-
-        <h1>New question </h1>
         <section class="col-md-9">
+        {% if request.user.is_authenticated %}
+          <h1>New question </h1>
           <form role="form" method="post">
             {% csrf_token %}
             <div class="input-group martop15">
@@ -27,5 +27,8 @@
             </div>
           
           </form>
+        {% else %}
+          <a style="display: block" href={% url 'login-url' %}> You need to login </a>
+        {% endif %}
         </section>
 {% endblock %}

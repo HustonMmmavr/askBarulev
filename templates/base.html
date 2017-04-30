@@ -58,7 +58,7 @@
             {% if request.user.is_authenticated %}
               <ul class="nav navbar-nav navbar-right uluser PadLeft25">
               <li> 
-                <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-success askBtn" >Ask!</button>
+                <a href={% url 'ask-url' %} class="btn btn-success askBtn" >Ask!</a>
               </li>
               <li class="user dropdown">
 
