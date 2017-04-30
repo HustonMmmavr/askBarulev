@@ -11,11 +11,11 @@ def get_image_path(instance, filename):
     return os.path.join('photos', str(instance.id), filename)
 from django.core.files.storage import FileSystemStorage
 
-fs = FileSystemStorage(location='/media/photos')
+#fs = FileSystemStorage(location='/media/photos')
 
 class Profile(models.Model):
     user = models.OneToOneField(User)
-    avatar = models.ImageField(storage=fs)#upload_to=get_image_path)
+    avatar = models.ImageField(upload_to='avatars')#get_image_path)
     info = models.TextField(default='mm')
 
     def get_avatar(self):

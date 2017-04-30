@@ -95,34 +95,34 @@ def logout(request):
 
 def signup(request):
 	if request.user.is_authenticated():
-		request.session['img'] = Profile.objects.filter(id=request.user.id)[0].get_avatar()
+		request.session['img'] = Profile.objects.filter(user_id=request.user.id)[0].get_avatar()
 		return HttpResponseRedirect('/')
-	
-	if request.method == "POST":
-		form = LoginForm(request.POST)
-		if form.is_valid():
-			auth.login(request, form.cleaned_data['user'])
-			request.session['img'] = Profile.objects.filter(id=request.user.id)[0].get_avatar()
-			return HttpResponseRedirect('/')
-		else:
-			request.img = None
-			form = LoginForm()
 
-	return render(request, 'login.html', {
-	    'form': form,
-	})
+	if request.method == "POST":
+		form = SignupForm(request.POST, request.FILES)
+		if form.is_valid():
+			user = form.save()
+			auth.login(request, user)
+			request.session['img'] = Profile.objects.filter(user_id=request.user.id)[0].get_avatar()
+			return HttpResponseRedirect('/')
+	else:
+		request.img = None
+		form = SignupForm()
+	return render(request, 'signup.html', {
+			'form': form,
+			})
 
 def form_login(request):
     redirect = request.GET.get('continue', '/')
     if request.user.is_authenticated():
-        request.session['img'] = Profile.objects.filter(id=request.user.id)[0].get_avatar()
+        request.session['img'] = Profile.objects.filter(user_id=request.user.id)[0].get_avatar()
         return HttpResponseRedirect(redirect)
 
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
             auth.login(request, form.cleaned_data['user'])
-            request.session['img'] = Profile.objects.filter(id=request.user.id)[0].get_avatar()
+            request.session['img'] = Profile.objects.filter(user_id=request.user.id)[0].get_avatar()
             return HttpResponseRedirect(redirect)
     else:
         request.img = None

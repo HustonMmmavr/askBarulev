@@ -64,6 +64,19 @@
 	padding: 7px 8px !important;
 }
 
+.searchBtn
+{
+	/*margin-top: 22px;*/
+	/*margin-right: 15px;*/
+	margin-left: 0;
+
+	/*float: right;*/
+	padding: 7px 9px !important;
+	border-radius: 4px;
+	background-color: #5cb85c;
+	border-color: #4cae4c;
+}
+
 a 
 {
 	outline: none !important; /* Убираем границу вокруг ссылок  */
@@ -250,7 +263,8 @@ border-color: #337ab7;
 
 .upload-input
 {
-	max-width: 200px;
+	max-width: 150px;
+	display: inline-block !important;
 }
 
 .upload-btn
