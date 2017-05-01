@@ -5,7 +5,7 @@ from django.template import Template
 from django.shortcuts import render, render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ask.models import Question, Profile, Answer, LikeToQuestion, LikeToAnswer, Tag
-from ask.form import LoginForm, SignupForm
+from ask.form import LoginForm, SignupForm, SettingsForm
 from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -133,12 +133,27 @@ def form_login(request):
             'form': form,
 })
 
-# def signup(request):
-# 	return render(request, 'signup.html') 
-
 def ask(request):
 	temp = loader.get_template('ask.html')
 	return render(request, 'ask.html')
 
+@login_required
 def settings(request):
-	return render(request, 'settings.html')
+	# if request.user.is_authenticated():
+		# request.session['img'] = Profile.objects.filter(user_id=request.user.id)[0].get_avatar()
+		# return HttpResponseRedirect('/')
+	if request.method == "POST":
+		form = SettingsForm(request.POST, request.FILES)
+		if form.is_valid():
+			user = form.save(request.user.username)
+			auth.login(request, user)
+			request.session['img'] = Profile.objects.filter(user_id=request.user.id)[0].get_avatar()
+			return HttpResponseRedirect('/settings')
+	else:
+		request.img = None
+		form = SettingsForm()
+	return render(request, 'settings.html', {
+			'form': form,
+			})
+
+	# return render(request, 'settings.html')

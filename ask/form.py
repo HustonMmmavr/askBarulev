@@ -112,3 +112,35 @@ class SignupForm(forms.Form):
         up.save()
         print('profile saved')
         return authenticate(username=u.username, password=password)
+
+class SettingsForm(forms.Form):
+    username = forms.CharField(
+            widget=forms.TextInput( attrs={ 'class': 'form-control inp-radius', 'placeholder': 'Login', }),
+            max_length=30, label=u'Login'
+            )
+    email = forms.EmailField(
+            widget=forms.TextInput( attrs={ 'class': 'form-control inp-radius', 'type': 'email', 'placeholder': 'ivanov@gmail.com', }),
+            required = False, max_length=254, label=u'E-mail'
+            )
+    avatar = forms.FileField(
+            widget=forms.ClearableFileInput( attrs={ 'class': 'ask-signup-avatar-input', 'style' : 'display: none;',}),
+            required=False, label=u'Avatar', 
+            )
+    
+    def save(self, old_name):
+        data = self.cleaned_data
+        username = data.get('username')
+        try:
+            u = User.objects.get(username=old_name)
+        except User.DoesNotExist:
+            raise forms.ValidationError(u'User dosent exist')
+
+        u.username = username
+        u.email = data.get('email')
+        u.save()
+
+        up = Profile.objects.get(user_id=u.id)
+        up.avatar = data.get('avatar')
+
+        up.save()
+        return authenticate(username=u.username, password=u.password)

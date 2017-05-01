@@ -5,20 +5,15 @@
           <form role="form" data-toggle="validator" method="post" enctype="multipart/form-data">
               {% csrf_token %}
               {%if form.non_field_errors.as_text %}
-            
                  <div class="alert alert-danger alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   <strong>{{ form.non_field_errors.as_text }} </strong>
                 </div> 
               {%endif%}
-
-
               {%for field in form  %}
-
                 <div class="form-group {% if field.errors %}  has-error{% endif %} martop15 col-md-12 col-xs-12 pad0">
                       {{field.labelfile}}
                       {%if field.label == "Avatar" %}
-            
                         <div class="col-md-12 col-xs-12 pad0 martop15 upload-img-div">
                           <img src="/img/noavatar.jpeg" id="img_signup_settings" class="upload-img">
                         </div> 
@@ -28,11 +23,9 @@
                             <label class="upload file-upload filebordered" id="fff" for="id_avatar">
                               <mark class="pad0"></mark><span class="btn btn-success btnfileupload">Upload</span>
                                 {{field}}
-
                             </label>
                       {% else %}
                           <div class="col-md-12 col-xs-12 pad0">
-
                             <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">{{field.label}}   </span>
                             <div class="pad0 col-md-9 col-xs-8">
                             {{field}}
@@ -40,40 +33,10 @@
                             {% endif %}
                             <div class="help-block with-errors"> </div>
                       {%endif%}
-
-
                     </div>
                   </div>
                 </div>
-
-                     <!--    <label class="upload file-upload searchBtn" for="id_avatar">
-                        <mark>Search</mark>
-                         <input type="text" class=" form-control inp-radius upload-input" > 
-                        </label> -->
-                        <!-- <label class="searchBtn" style="font-size: 14px;">Search -->
               {% endfor %}
-<!-- 
-               <div class="form-group">
-    <label class="control-label col-sm-2" for="upload-img">Upload avatar</label>
-    <div class="col-sm-10">
-      <img alt="User image" src="/img/user-big.jpg" class="user-image-big">
-      <label class="upload file-upload" for="upload-img">
-        <mark>Choose img...</mark><span class="btn btn-primary">Upload</span>
-        <input type="file" id="upload-img" class="form-control">
-      </label>
-    </div>
-</div> -->
-<!--             <div class="input-group martop15 col-md-12 col-xs-12 pad0">
-              <div class="col-md-12 col-xs-12 pad0">
-                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">Upload   </span>
-                <div class="pad0">
-                  <input type="text" class="form-control upload-input" aria-describedby="sizing-addon">
-                  <label class="input-group-btn btn btn-success upload-btn" style="font-size: 14px;">Search
-                    <input style="display: none"  type="file">
-                </div>
-              </div>
-            </div> -->
-            
             <div class="martop15">
               <button class="btn btn-success form-span col-md-1" type="submit">Register </button>
             </div>
