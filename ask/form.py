@@ -49,15 +49,15 @@ class SignupForm(forms.Form):
             max_length=30, label=u'Second name'
             )
     email = forms.EmailField(
-            widget=forms.TextInput( attrs={ 'class': 'form-control inp-radius', 'type': 'email', 'placeholder': 'ivanov@gmail.com', }),
-            required = False, max_length=254, label=u'E-mail'
+            widget=forms.TextInput( attrs={ 'class': 'form-control inp-radius', 'type': 'email', 'placeholder': u'ivanov@gmail.com', }),
+            required = True, max_length=254, label=u'E-mail'
             )
     password1 = forms.CharField(
-            widget=forms.PasswordInput( attrs={ 'class': 'form-control inp-radius', 'placeholder': '*****' }),
+            widget=forms.PasswordInput( attrs={ 'class': 'form-control inp-radius', 'placeholder': u'*****' }),
             min_length=6, label=u'Password'
             )
     password2 = forms.CharField(
-            widget=forms.PasswordInput( attrs={ 'class': 'form-control inp-radius', 'placeholder': '*****' }),
+            widget=forms.PasswordInput( attrs={ 'class': 'form-control inp-radius', 'placeholder': u'*****' }),
             min_length=6, label=u'Repeat password'
             )
     info = forms.CharField(
@@ -85,7 +85,6 @@ class SignupForm(forms.Form):
         pass2 = self.cleaned_data.get('password2', '')
 
         if pass1 != pass2:
-            print('b')
             raise forms.ValidationError(u'Passwords not equal')
 
     def save(self):
@@ -120,27 +119,82 @@ class SettingsForm(forms.Form):
             )
     email = forms.EmailField(
             widget=forms.TextInput( attrs={ 'class': 'form-control inp-radius', 'type': 'email', 'placeholder': 'ivanov@gmail.com', }),
-            required = False, max_length=254, label=u'E-mail'
+            max_length=254, label=u'E-mail'
             )
     avatar = forms.FileField(
             widget=forms.ClearableFileInput( attrs={ 'class': 'ask-signup-avatar-input', 'style' : 'display: none;',}),
             required=False, label=u'Avatar', 
             )
-    
-    def save(self, old_name):
+
+    def clean_username(self):
+        username= self.cleaned_data.get('username')
+
+        try:
+            u = User.objects.get(username=username)
+            raise forms.ValidationError(u'User with this name exist') 
+        except User.DoesNotExist:
+            return username
+
+    def save(self, user):
         data = self.cleaned_data
         username = data.get('username')
-        try:
-            u = User.objects.get(username=old_name)
-        except User.DoesNotExist:
-            raise forms.ValidationError(u'User dosent exist')
+        user.username = username
+        user.email = data.get('email')
+        user.save()
 
-        u.username = username
-        u.email = data.get('email')
-        u.save()
-
-        up = Profile.objects.get(user_id=u.id)
+        up = Profile.objects.get(user_id=user.id)
         up.avatar = data.get('avatar')
 
         up.save()
-        return authenticate(username=u.username, password=u.password)
+        return authenticate(username=user.username, password=user.password)
+
+
+
+
+class NewQuestionForm(forms.Form):
+    title = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control inp-radius', 'placeholder': 'Input Title'}),
+        required=True, max_length=40, label=u'Title'
+        )
+
+    text = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control inp-radius', 'placeholder': 'Input text'}),
+        required=True,  label=u'Input your text'
+        )
+
+    tags=forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control inp-radius', 'placeholder': 'Input tags: tag1, tag2,...'}),
+        required=True, max_length=100, label=u'Tags'
+        )
+
+    def clean_tags(self):
+        print('clen')
+        tags_list = self.cleaned_data.get('tags', '').split(',')
+        if tags_list: 
+            for sym in ['\\', ']', '[', '%']:
+                for tag in tags_list:
+                    if tag.find(sym) != -1:
+                        raise forms.ValidationError(u'Error symbol in tag')
+        return tags_list
+
+    def save(self, owner):
+        data = self.cleaned_data
+        title = data.get('title')
+        text = data.get('text')
+        tags_list = data.get('tags')
+        print('tags')
+        if tags_list: 
+            tags_list = [tag.replace(' ', '') for tag in tags_list]
+            tags_list = [tag.replace('-', '_') for tag in tags_list]
+
+        q = Question()
+        q.title = title
+        q.text = text
+        q.owner = Profile.objects.get(user_id=owner.id)
+        q.save()
+
+        for tag in tags_list:
+            tag_obj = Tag.objects.get_or_create(tag)
+            q.tags.add(tag_obj)
+
+        return q

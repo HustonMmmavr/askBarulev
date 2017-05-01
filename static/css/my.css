@@ -51,6 +51,11 @@
     z-index:20;
 }
 
+.error
+{
+	color: #a94442;
+}
+
 .rounded_form
 {
 	border-radius: 5px 25px 5px 25px !important;

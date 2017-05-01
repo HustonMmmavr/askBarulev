@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-        <section class="col-md-9">
+      <section class="col-md-9">
+        {% if request.user.is_authenticated %}
           <h1> Settings </h1>
-          <form role="form" data-toggle="validator" method="post" enctype="multipart/form-data">
+          <form role="form" data-toggle="validator" novalidate="true" method="post" enctype="multipart/form-data">
               {% csrf_token %}
               {%if form.non_field_errors.as_text %}
                  <div class="alert alert-danger alert-dismissible" role="alert">
@@ -29,7 +30,12 @@
                             <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">{{field.label}}   </span>
                             <div class="pad0 col-md-9 col-xs-8">
                             {{field}}
-                            {% if field.errors %} {% for e in field.errors %}{{ e }}{% endfor %}
+                            {% if field.errors %} 
+                              {% for e in field.errors %}
+                                <div class="error">
+                                  {{ e }}
+                                </div>
+                              {% endfor %}
                             {% endif %}
                             <div class="help-block with-errors"> </div>
                       {%endif%}
@@ -41,64 +47,12 @@
               <button class="btn btn-success form-span col-md-1" type="submit">Change </button>
             </div>
           </form>
+        {% else %}
+          <a style="display: block" href={% url 'login-url' %}> You need to login </a>
+        {% endif %}
+
+        
         </section>
+
 {% endblock %}
-        <!-- <section class="col-md-9">
-          <form role="form padtop15" data-toggle="validator">
-
-            <div class="alert alert-danger alert-dismissible col-md-12 col-xs-12" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <strong>Error!</strong> This niname is used already.
-            </div>
-            
-            <div class="form-group martop15 col-md-12 col-xs-12 pad0">
-              <div class="col-md-12 col-xs-12 pad0">
-                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon1">Login   </span>
-                <div class="pad0 col-md-9 col-xs-8">
-                  <input type="text" class="form-control col-md-12 col-xs-12 inp-radius" aria-describedby="sizing-addon" required>
-                  <div class="help-block with-errors"> </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group martop15 col-md-12 col-xs-12 pad0">
-              <div class="col-md-12 col-xs-12 pad0">
-                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">Email   </span>
-                <div class="pad0 col-md-9 col-xs-8">
-                  <input type="email"  class="form-control inp-radius" id="exampleTextarea" rows="3" required>
-                   <div class="help-block with-errors"> </div>
-                </div>
-               
-              </div>
-            </div>
-
-            <div class="input-group martop15 col-md-12 col-xs-12  pad0">
-              <div class="pad0">
-                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2 " id="setting-addon3">NickName   </span>
-                <div class="pad0 col-md-9 col-xs-8 ">
-                  <input type="text" class="form-control inp-radius" aria-describedby="sizing-addon">
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-12 col-xs-12 pad0 martop15 upload-img-div">
-              <img src="/img/noavatar.jpeg" class="upload-img">
-            </div> 
-
-            <div class="input-group col-md-12 col-xs-12 pad0">
-              <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon4">Upload   </span>
-                <div class="pad0">
-                  <input type="text" class="form-control upload-input" aria-describedby="sizing-addon">
-                  <label class="input-group-btn btn btn-success upload-btn" style="font-size: 14px; max-height: 34px;">Search
-                    <input style="display: none" type="file">
-                  </label>
-                </div>
-            </div>
-
-            <div class="martop15" style="margin-top: 30px;">
-              <button class="btn btn-success form-span col-md-1 " type="submit">Change </button>
-            </div>
       
-          </form>
-        </section> -->
-

@@ -6,16 +6,9 @@ from django.core.urlresolvers import reverse
 from django.db.models.functions import Coalesce
 import datetime
 
-
-def get_image_path(instance, filename):
-    return os.path.join('photos', str(instance.id), filename)
-from django.core.files.storage import FileSystemStorage
-
-#fs = FileSystemStorage(location='/media/photos')
-
 class Profile(models.Model):
     user = models.OneToOneField(User)
-    avatar = models.ImageField(upload_to='avatars')#get_image_path)
+    avatar = models.ImageField(upload_to='avatars')
     info = models.TextField(default='mm')
 
     def get_avatar(self):
@@ -24,6 +17,14 @@ class Profile(models.Model):
 
 class TagManager(models.Manager):
     # searches using title
+
+    def get_or_create(self, title):
+        try:
+            tag = self.get_by_title(title)
+        except Tag.DoesNotExist:
+            tag = self.create(title=title)
+        return tag
+    
     def get_by_title(self, title):
         return self.get(title=title)
 
