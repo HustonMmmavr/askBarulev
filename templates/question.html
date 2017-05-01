@@ -52,21 +52,25 @@
             </div>
           {%endfor%}
 
-          <form method="post" role="form" data-toggle="validator" action="{% url 'question-url' question_number=question.id %}">
-            {% csrf_token %}
-            <div class="form-group martop15 col=md-12 col-xs-12 pad0">
-                <div class="col-md-12 col-xs-12 pad0">
-                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="sizing-addon2">{{form.text.label}} </span>
-                <div class="pad0 col-md-9 col-xs-8">
-                  {{form.text}}
-                  <div class="help-block with-errors"> </div>
-                </div>
-            </div>
+          {% if request.user.is_authenticated %}
+            <form method="post" role="form" data-toggle="validator" action="{% url 'question-url' question_number=question.id %}">
+              {% csrf_token %}
+              <div class="form-group martop15 col=md-12 col-xs-12 pad0">
+                  <div class="col-md-12 col-xs-12 pad0">
+                  <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="sizing-addon2">{{form.text.label}} </span>
+                  <div class="pad0 col-md-9 col-xs-8">
+                    {{form.text}}
+                    <div class="help-block with-errors"> </div>
+                  </div>
+              </div>
 
-            <div class="martop15 " style="padding-bottom: 50px;">
-                <button class="btn btn-success form-span col-md-1" type="submit">Answer </button>
-            </div>
-          </form>
+              <div class="martop15 " style="padding-bottom: 50px; margin-bottom: 20px;">
+                  <button class="btn btn-success form-span col-md-1" type="submit">Answer </button>
+              </div>
+            </form>
+          {% else %}
+            <a style="display: block; margin-bottom: 20px;" href={% url 'login-url' %}> If you want to answer just login </a>
+          {% endif %}
 
         </section>
 
