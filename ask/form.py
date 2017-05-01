@@ -65,7 +65,7 @@ class SignupForm(forms.Form):
             required=False, label=u'Status'
             )
     avatar = forms.FileField(
-            widget=forms.ClearableFileInput( attrs={ 'class': 'ask-signup-avatar-input',}),
+            widget=forms.ClearableFileInput( attrs={ 'class': 'ask-signup-avatar-input', 'style' : 'display: none;',}),
             required=False, label=u'Avatar', 
             )
 

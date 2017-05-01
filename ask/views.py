@@ -101,6 +101,7 @@ def signup(request):
 	if request.method == "POST":
 		form = SignupForm(request.POST, request.FILES)
 		if form.is_valid():
+			#print(settings.MEDIA_URL)
 			user = form.save()
 			auth.login(request, user)
 			request.session['img'] = Profile.objects.filter(user_id=request.user.id)[0].get_avatar()
