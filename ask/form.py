@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django import forms
 
 from django.contrib.auth.hashers import make_password
-from ask.models import Profile, Question, Tag
+from ask.models import Profile, Question, Tag, Answer
 
 import urllib
 from django.core.files import File
@@ -168,7 +168,6 @@ class NewQuestionForm(forms.Form):
         )
 
     def clean_tags(self):
-        print('clen')
         tags_list = self.cleaned_data.get('tags', '').split(',')
         if tags_list: 
             for sym in ['\\', ']', '[', '%']:
@@ -182,7 +181,6 @@ class NewQuestionForm(forms.Form):
         title = data.get('title')
         text = data.get('text')
         tags_list = data.get('tags')
-        print('tags')
         if tags_list: 
             tags_list = [tag.replace(' ', '') for tag in tags_list]
             tags_list = [tag.replace('-', '_') for tag in tags_list]
@@ -198,3 +196,14 @@ class NewQuestionForm(forms.Form):
             q.tags.add(tag_obj)
 
         return q
+
+class AnswerForm(forms.Form):
+    text = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control inp-radius', 'placeholder': 'Input text', 'rows': '3'}),
+        required=True,  label=u'Input your text'
+        )
+
+    def save(self, request, question):
+        owner = Profile.objects.get(user_id=request.user.id)
+        answer = Answer.objects.create(owner=owner, question=question, text=self.cleaned_data.get('text'))
+        return answer

@@ -32,7 +32,7 @@
 
           {% for answer in question.answer_set.all%}
 
-            <div class="martop15 bordered">
+            <div class="martop15 bordered" id="a_{{answer.id}}">
               <div class="col-xs-1 col-sm-1 likes">
                 <div><a href="#" class="glyphicon glyphicon-triangle-top font32 grey"></a></div>
                 <div align=center class="font18 grey" >{{answer.likes}}</div>
@@ -41,7 +41,6 @@
               <div class="answer-block">
                 <div class="answer-info col-md-1 col-xs-2">
                   <img alt="img" src="{{MEDIA_URL}}{{answer.owner.get_avatar}}">
-                  <!-- <input class="number-input" id="movie" type="number" value="{{answer.likes}}"/> -->
                 </div>
                 <div class="col-md-9 col-xs-9 answer-text">
                   <div class="main-info-answer"><p>{{answer.text}}</p></div>
@@ -53,14 +52,21 @@
             </div>
           {%endfor%}
 
-          <div class="input-group martop15">
-              <span class="input-group-addon form-span" id="sizing-addon2">Input your answer   </span>
-              <textarea type="text" class="form-control" id="exampleTextarea" rows="3" placeholder="Ask yor question"></textarea>
-          </div>
+          <form method="post" role="form" data-toggle="validator" action="{% url 'question-url' question_number=question.id %}">
+            {% csrf_token %}
+            <div class="form-group martop15 col=md-12 col-xs-12 pad0">
+                <div class="col-md-12 col-xs-12 pad0">
+                <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="sizing-addon2">{{form.text.label}} </span>
+                <div class="pad0 col-md-9 col-xs-8">
+                  {{form.text}}
+                  <div class="help-block with-errors"> </div>
+                </div>
+            </div>
 
-          <div class="martop15 " style="padding-bottom: 50px;">
-              <button class="btn btn-success form-span col-md-1" type="submit">Ask </button>
-          </div>
+            <div class="martop15 " style="padding-bottom: 50px;">
+                <button class="btn btn-success form-span col-md-1" type="submit">Answer </button>
+            </div>
+          </form>
 
         </section>
 

@@ -5,7 +5,7 @@ from django.template import Template
 from django.shortcuts import render, render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ask.models import Question, Profile, Answer, LikeToQuestion, LikeToAnswer, Tag
-from ask.form import LoginForm, SignupForm, SettingsForm, NewQuestionForm
+from ask.form import LoginForm, SignupForm, SettingsForm, NewQuestionForm, AnswerForm
 from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -74,13 +74,21 @@ def tag(request, tag_name, page_num=1):
 	return render(request, 'tag.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'tag-url', 'tag': tag}) 
 
 def question(request, question_number):
+	print(question_number)
 	try:
 		q = Question.objects.get_single(int(question_number))
+		if request.method == "POST":
+			form = AnswerForm(request.POST)
+			if form.is_valid():
+				answer = form.save(request, q)
+				return HttpResponseRedirect('/question/' + str(q.id) + '/#a_' + str(answer.id))
+		else:
+			form = AnswerForm()
 	except Question.DoesNotExist:
 		raise Http404()
 	except ValueError:
 		raise Http404()
-	return render(request, 'question.html', {'question': q})
+	return render(request, 'question.html', {'question': q, 'form': form})
 
 def all(request, page_num=1):
 	questions = Question.objects.list_ordered_date()

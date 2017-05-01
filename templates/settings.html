@@ -25,22 +25,24 @@
                               <mark class="pad0"></mark><span class="btn btn-success btnfileupload">Upload</span>
                                 {{field}}
                             </label>
+                          </div>
+                        </div>
                       {% else %}
                           <div class="col-md-12 col-xs-12 pad0">
-                            <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">{{field.label}}   </span>
+                            <span class="input-group-addon form-span span-pad col-md-1 col-xs-2" id="setting-addon2">{{field.label}} </span>
                             <div class="pad0 col-md-9 col-xs-8">
-                            {{field}}
-                            {% if field.errors %} 
-                              {% for e in field.errors %}
-                                <div class="error">
-                                  {{ e }}
-                                </div>
-                              {% endfor %}
-                            {% endif %}
-                            <div class="help-block with-errors"> </div>
+                              {{field}}
+                              {% if field.errors %} 
+                                {% for e in field.errors %}
+                                  <div class="error">
+                                    {{ e }}
+                                  </div>
+                                {% endfor %}
+                              {% endif %}
+                              <div class="help-block with-errors"> </div>
+                            </div>
+                          </div>
                       {%endif%}
-                    </div>
-                  </div>
                 </div>
               {% endfor %}
             <div class="martop15">

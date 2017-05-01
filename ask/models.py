@@ -12,12 +12,9 @@ class Profile(models.Model):
     info = models.TextField(default='mm')
 
     def get_avatar(self):
-        #print(self.avatar)
         return str(self.avatar)
 
 class TagManager(models.Manager):
-    # searches using title
-
     def get_or_create(self, title):
         try:
             tag = self.get_by_title(title)
@@ -25,6 +22,7 @@ class TagManager(models.Manager):
             tag = self.create(title=title)
         return tag
     
+    # searches using title
     def get_by_title(self, title):
         return self.get(title=title)
 
