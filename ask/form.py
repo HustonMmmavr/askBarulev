@@ -2,6 +2,7 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django import forms
+# from django.forms.util import ErrorList
 
 from django.contrib.auth.hashers import make_password
 from ask.models import Profile, Question, Tag, Answer
@@ -126,18 +127,37 @@ class SettingsForm(forms.Form):
             required=False, label=u'Avatar', 
             )
 
-    def clean_username(self):
-        username= self.cleaned_data.get('username')
+    def is_valid(self, user):
+    # run the parent validation first
+        valid=super(SettingsForm, self).is_valid()
 
+        # we're done now if not valid
+        if not valid:
+            return valid
+        
+        username = self.cleaned_data.get('username')
+        if username == user.username:
+            return True
         try:
-            u = User.objects.get(username=username)
-            raise forms.ValidationError(u'User with this name exist') 
+            u=User.objects.get(username=username)
+            self.add_error('username', 'This username used')
+            return False
         except User.DoesNotExist:
-            return username
+            return True
+
+    # def clean_username(self):
+    #     username= self.cleaned_data.get('username')
+    #     try:
+    #         u = User.objects.get(username=username)
+    #         raise forms.ValidationError(u'User with this name exist') 
+    #     except User.DoesNotExist:
+    #         return username
 
     def save(self, user):
         data = self.cleaned_data
         username = data.get('username')
+        print(username)
+        # if username != None:
         user.username = username
         user.email = data.get('email')
         user.save()
@@ -146,6 +166,7 @@ class SettingsForm(forms.Form):
         up.avatar = data.get('avatar')
 
         up.save()
+
         return authenticate(username=user.username, password=user.password)
 
 

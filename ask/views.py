@@ -157,11 +157,13 @@ def ask(request):
 			'form': form,
 			})
 
+
+
 @login_required
 def settings(request):
 	if request.method == "POST":
 		form = SettingsForm(request.POST, request.FILES)
-		if form.is_valid():
+		if form.is_valid(request.user):
 			user = form.save(request.user)
 			auth.login(request, user)
 			request.session['img'] = Profile.objects.filter(user_id=request.user.id)[0].get_avatar()
