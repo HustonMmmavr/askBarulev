@@ -11,8 +11,7 @@ function readURL(input) {
     }
 }
 
-function beautfulLinks()
-{
+$(document).ready(function(){
 	var txtlinks = $("#beautiful-link").text();
     var linksarr = txtlinks.split(" ");
     var finlinks = "";
@@ -21,13 +20,11 @@ function beautfulLinks()
         finlinks += "<a href=\"#\" style=\"font-size: " + (Math.random()*(32 - 16) + 16) + "px; color: #" + Math.floor(Math.random() * 16777215).toString(16) + ";\">" + item + " </a>";
     });
     $("#beautiful-link").html(finlinks);
-}
+});
+
 $(document).ready(function() {
-	//beautifulLinks();
 	$( "input[type='file']" ).change(function() {
-		console.log("1");
 		readURL(this);
-	  // Check input( $( this ).val() ) for validity here
 	});
 });
 

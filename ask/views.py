@@ -11,6 +11,8 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from ask.decorators import need_login
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
+import simplejson as json
 
 @csrf_exempt
 def main( wsgi_request):
@@ -74,7 +76,6 @@ def tag(request, tag_name, page_num=1):
 	return render(request, 'tag.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'tag-url', 'tag': tag}) 
 
 def question(request, question_number):
-	print(question_number)
 	try:
 		q = Question.objects.get_single(int(question_number))
 		if request.method == "POST":
@@ -109,7 +110,6 @@ def signup(request):
 	if request.method == "POST":
 		form = SignupForm(request.POST, request.FILES)
 		if form.is_valid():
-			#print(settings.MEDIA_URL)
 			user = form.save()
 			auth.login(request, user)
 			request.session['img'] = Profile.objects.filter(user_id=request.user.id)[0].get_avatar()
@@ -147,7 +147,6 @@ def ask(request):
 		form = NewQuestionForm(request.POST)
 		if form.is_valid():
 			question = form.save(request.user)
-			print('/question/' + str(question.id))
 			return HttpResponseRedirect('/question/' + str(question.id) + '/')
 	else:
 		request.img = None
@@ -175,3 +174,43 @@ def settings(request):
 			'form': form,
 			})
 
+@login_required()
+def correct(request):
+	print(request.body)
+	body = request.body.decode("utf-8")
+	request.POST = json.loads(body)
+	a = Answer.objects.get(id=request.POST.get('aid', False))
+	is_correct = request.POST.get('checked', False)
+	print(is_correct)
+	a.correct = is_correct
+	a.save()
+	return HttpResponse(
+		json.dumps({"aid": request.POST['aid'], 'correct': is_correct}),
+		content_type="application/json"
+		)
+
+
+@login_required()
+def like(request):
+	body = request.body.decode("utf-8")
+	request.POST = json.loads(body)
+	if request.POST['type'] == 'que':
+		q = Question.objects.get(id=request.POST['qid'])
+		p = Profile.objects.get(user_id=request.user.id)
+		value = 1 if request.POST['type_like'] == 'like_question' else -1
+		LikeToQuestion.objects.add_or_update(owner=p, question=q, value=value)
+		return HttpResponse(
+			json.dumps({"qid": request.POST['qid'], 'like': value}),
+			content_type="application/json"
+		)
+	else:
+		if request.POST['type'] == 'ans':
+			
+			a = Answer.objects.get(id=request.POST['aid'])
+			p = Profile.objects.get(user_id=request.user.id)
+			value = 1 if request.POST['type_like'] == 'like_answer' else -1
+			LikeToAnswer.objects.add_or_update(owner=p, answer=a, value=value)
+			return HttpResponse(
+				json.dumps({"aid": request.POST['aid'], 'like': value}),
+				content_type="application/json"
+			)

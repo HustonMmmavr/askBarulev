@@ -1,14 +1,11 @@
 from django.http import HttpResponse, Http404
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from django import forms
-# from django.forms.util import ErrorList
-
 from django.contrib.auth.hashers import make_password
 from ask.models import Profile, Question, Tag, Answer
-
-import urllib
 from django.core.files import File
+from django import forms
+import urllib
 
 class LoginForm(forms.Form):
     login = forms.CharField(
@@ -71,12 +68,10 @@ class SignupForm(forms.Form):
             )
 
     def clean_username(self):
-        print('cl')
         username = self.cleaned_data.get('username', '')
 
         try:
             u = User.objects.get(username=username)
-            print('a')
             raise forms.ValidationError(u'User exist')
         except User.DoesNotExist:
             return username
@@ -89,7 +84,6 @@ class SignupForm(forms.Form):
             raise forms.ValidationError(u'Passwords not equal')
 
     def save(self):
-        print('save')
         data = self.cleaned_data
         password = data.get('password1')
         u = User()
@@ -106,11 +100,9 @@ class SignupForm(forms.Form):
         up = Profile()
         up.user = u
         up.info = data.get('info')
-        print(data.get('avatar'))
         up.avatar = data.get('avatar')
 
         up.save()
-        print('profile saved')
         return authenticate(username=u.username, password=password)
 
 class SettingsForm(forms.Form):
@@ -156,7 +148,6 @@ class SettingsForm(forms.Form):
     def save(self, user):
         data = self.cleaned_data
         username = data.get('username')
-        print(username)
         # if username != None:
         user.username = username
         user.email = data.get('email')

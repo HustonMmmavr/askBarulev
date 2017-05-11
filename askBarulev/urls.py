@@ -20,6 +20,7 @@ from ask import views
 from django.conf.urls.static import static
 
 urlpatterns = [
+    url(r'^correct$', views.correct, name='correct'),
     url(r'^admin/', admin.site.urls),
     url(r'^main/', views.main),
     url(r'^login/', views.form_login, name='login-url'),
@@ -31,6 +32,7 @@ urlpatterns = [
     url(r'^signup/', views.signup, name='signup-url'),
     url(r'^ask/', views.ask, name='ask-url'),
     url(r'^settings/', views.settings, name='settings-url'),
+    url(r'^like$', views.like, name='like'),
     url(r'^question/(?P<question_number>\w+)/', views.question, name='question-url'),
     url(r'^all/(?P<page_num>\w+)/', views.all, name='all-url'),
     url(r'^all/', views.all, name='all-url'),

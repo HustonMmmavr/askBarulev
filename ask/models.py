@@ -34,35 +34,6 @@ class Tag(models.Model):
         return reverse(kwargs={'tag': self.title})
     objects=TagManager()
 
-
-# class QuestionQuerySet(models.QuerySet):
-#     # preloads tags
-#     def with_tags(self):
-#         return self.prefetch_related('tags')
-
-
-#     # preloads answers
-#     def with_answers(self):
-#         res = self.prefetch_related('answer_set')
-#         #res = self.prefetch_related('answer_set__author')
-#        # res = self.prefetch_related('answer_set__author__user')
-#         return res
-
-#     def order_by_popularity(self):
-#         return self.order_by('-likes')
-
-#     # loads number of answers
-#     def with_answers_count(self):
-#         return self.annotate(answers_count=Count('answer__id', distinct=True))
-
-#     # loads author
-#     def with_author(self):
-#         return self.select_related('owner').select_related('owner__user')
-
-#    # loads number of answers
-#    # def with_answers_count(self):
-        # return self.annotate(answers_count=Count('answer__id', distinct=True))
-
 class QuestionManager(models.Manager):
     qs = None
 
@@ -86,7 +57,7 @@ class QuestionManager(models.Manager):
     def add_author(self):
         self.qs.select_related('owner').select_related('owner__user')
         return self
- 
+
     # list of hot questions
     def list_hot(self):
         return self.init().add_tags().add_author().get_query().order_by('-likes')
@@ -141,28 +112,7 @@ class LikeToQuestionManager(models.Manager):
         question.save()
         return new
 
-# class AnswerQuerySet(models.QuerySet):
-#     # loads author
-#     def with_author(self):
-#         return self.select_related('author').select_related('author__profile')
-
-#     # loads question
-#     def with_question(self):
-#         return self.select_related('question')
-
-#     # order by popularity
-#     def order_by_popularity(self):
-#         return self.order_by('-likes')
-
-#     # filter by date
-#     def with_date_greater(self, date):
-#         return self.filter(date__gt=date)
-
 class AnswerManager(models.Manager):
-    # # custom query set
-    # def get_queryset(self):
-    #     res = AnswerQuerySet(self.model, using=self._db)
-    #     return res.with_author()
 
     def has_question(self, question):
         return self.filter(question=question)
@@ -174,11 +124,8 @@ class AnswerManager(models.Manager):
     # create
     def create(self, **kwargs):
         ans = super(AnswerManager, self).create(**kwargs);
-        #print('a')
         ans.question.answers_cnt = self.sum_for_question(ans.question)
-        #print('b')
         ans.question.save()
-        #print('c')
         return ans
 
 #     # best answers

@@ -7,26 +7,12 @@
      <script src="/js/bootstrap.js"></script>
      <script src="/js/validator.js"></script>
      <script src="/js/fileupload.js"></script>
-     <script src="/js/imgout.js"</script>
-     <script>
-      $(document).ready(function()
-          {
-            var txtlinks = $("#beautiful-link").text();
-            console.log(txtlinks);
-            var linksarr = txtlinks.split(" ");
-            console.log(linksarr);
-            var finlinks = "";
-            linksarr.forEach(function(item, i, linksarr)
-                {
-                  //console.log(item.lenght);
-                  //if (item.toString().lenght > 1)
-                  finlinks += "<a href=\"#\" style=\"font-size: " + (Math.random()*(32 - 16) + 16) + "px; color: #" + Math.floor(Math.random() * 16777215).toString(16) + ";\">" + item + " </a>";
-
-                });
-                // console.log(finlinks);
-                $("#beautiful-link").html(finlinks);
-          })
-    </script>
+     <script src="/js/imgout.js"></script>
+     <script src="/js/js.cookie.js"></script>
+     <script src="/js/correct.js"></script>
+     <script src="/js/lik.js"></script>
+      <title>{% block title %} {% endblock %}</title>
+     <script src="/js/beautifullinks.js"></script>
   </head>
 
   <body>

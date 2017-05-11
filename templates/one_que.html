@@ -1,0 +1,35 @@
+{% load new_tags %}
+<div class="martop15 {{add_class}}" id="qid_{{question.id}}">
+  <div class="answer-area pad0">
+    <div class="col-xs-1 col-sm-1 likes">
+      <div>
+        <a href="javascript:void(0)" data-qid={{question.id}} data-typ="like_question" id="up_q{{question.id}}" class="like_question glyphicon glyphicon-triangle-top font32 grey {% is_disabled_que question.id request.user.id 1 %}">
+        </a>
+      </div>
+      <div align=center class="font18 grey" id="like_q{{question.id}}" >{{question.likes}}</div>
+      <div>
+        <a href="javascript:void(0)" data-qid={{question.id}} data-typ="dislike_question" id="down_q{{question.id}}" class="like_question glyphicon glyphicon-triangle-bottom font32 grey {% is_disabled_que question.id request.user.id -1 %} "></a>
+      </div>  
+    </div>
+    <div class="answer-block padtopbot15">
+      <div class="answer-info col-xs-2 col-md-1">
+          <img alt="img" src="{{MEDIA_URL}}{{question.owner.get_avatar}}">
+      </div>
+      <div class="col-md-9 col-xs-9 answer-text">
+        <a href={%url 'question-url' question_number=question.id %} class>{{question.title}}</a>
+        <div class="main-info-answer">
+          <p>{{question.text}} </p>
+        </div>
+        <div class="other-info"> 
+          {% if answers_cnt %}
+            <span class="answer"> <a href={% url 'question-url' question_number=question.id %}> answer ({{answers_cnt}}) </a> </span> 
+          {% endif %}
+          <span class="tags">Tags: 
+            {% for tag in question.tags.all %}
+              <a href={% url 'tag-url' tag_name=tag.title %}> {{tag.title}} </a> 
+            {% endfor %}
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>

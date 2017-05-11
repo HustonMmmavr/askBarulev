@@ -1,0 +1,34 @@
+{% load new_tags %}
+<div class="martop15 bordered" id="a_{{answer.id}}">
+  <div class="col-xs-1 col-sm-1 likes">
+    <div>
+      <a href="javascript:void(0)" data-aid={{answer.id}} data-typ="like_answer" id="up_a{{answer.id}}" class="like_answer glyphicon glyphicon-triangle-top font32 grey {% is_disabled_ans answer.id request.user.id 1 %}"></a>
+    </div>
+    <div align=center id="like_a{{answer.id}}" class="font18 grey" >{{answer.likes}}</div>
+    <div>
+      <a href="javascript:void(0)" data-aid={{answer.id}} data-typ="dislike_answer" id="down_a{{answer.id}}" class="like_answer glyphicon glyphicon-triangle-bottom font32 grey {% is_disabled_ans answer.id request.user.id -1 %}" ></a>
+    </div>
+  </div>
+  <div class="answer-block">
+    <div class="answer-info col-md-1 col-xs-2">
+      <img alt="img" src="{{MEDIA_URL}}{{answer.owner.get_avatar}}">
+    </div>
+    <div class="col-md-9 col-xs-9 answer-text">
+      <div class="main-info-answer"><p>{{answer.text}}</p></div>
+        <div class="checkbo-left">
+          {% if question.owner.user.id == request.user.id %}
+          <label> 
+            <input type="checkbox" class="correct" data-aid="{{answer.id}}" {% if answer.correct %} checked {%endif%}> Correct!
+          </label>
+          {% else %}
+            {% if answer.correct %} 
+            <label>Correct!</label>
+            {% else %}
+            <label> Uncorrect </label>
+            {%endif%}
+          {%endif%}
+
+        </div>
+    </div>
+  </div>
+</div>

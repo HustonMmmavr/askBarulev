@@ -22,6 +22,21 @@
     width: 230px;
 }
  
+.disabled_link
+{
+    pointer-events:none;
+}
+
+.enabled_link
+{
+	
+}
+
+.correct_ans
+{
+	
+}
+
 .fileform .selectbutton { 
     background-color: #A2A3A3;
     border: 1px solid #939494;
