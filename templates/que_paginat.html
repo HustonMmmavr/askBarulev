@@ -1,0 +1,17 @@
+<ul class="pagination">
+    {% if answers.has_previous %}
+     <li> <a href={% url paginator_url question_number=question.id page_num=answers.previous_page_number%} aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+    {% endif %}
+    {% for page in page_range %}
+      {% if answers.number == page %}
+        <li><a href={% url paginator_url question_number=question.id page_num=page %} class="active_page">{{page}}</a></li>
+      {% else %}
+         <li> <a href={% url paginator_url question_number=question.id  page_num=page %}> {{page}} </a></li>
+      {%endif%}
+    {% endfor %}
+    {% if answers.has_next %}
+      <li> 
+      <a href={% url paginator_url question_number=question.id  page_num=answers.next_page_number%} aria-label="Next"> <span aria-hidden="true">&raquo;</span></a>
+      </li>
+    {% endif %}
+  </ul>

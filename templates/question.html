@@ -5,7 +5,7 @@
         <section class="col-md-9">          
           {% include "one_que.html" with add_class='' answers_cnt=''%}
 
-          {% for answer in question.answer_set.all%}
+          {% for answer in answers%}
             {% include "one_ans.html"%}
           {%endfor%}
 
@@ -21,14 +21,20 @@
                   </div>
               </div>
 
+              <div style="clear: both"></div>
               <div class="martop15 " style="padding-bottom: 50px; margin-bottom: 20px;">
                   <button class="btn btn-success form-span col-md-1" type="submit">Answer </button>
               </div>
             </form>
           {% else %}
+          <div style="clear: both"></div>
             <a style="display: block; margin-bottom: 20px;" href={% url 'login-url' %}> If you want to answer just login </a>
           {% endif %}
 
+          <div class="martop15">
+
+            {%include "que_paginat.html" with paginator_url='question-url' answers=answers question=question page_range=page_range%}
+          </div>
         </section>
 
 {% endblock %}

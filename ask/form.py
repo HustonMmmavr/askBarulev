@@ -218,4 +218,5 @@ class AnswerForm(forms.Form):
     def save(self, request, question):
         owner = Profile.objects.get(user_id=request.user.id)
         answer = Answer.objects.create(owner=owner, question=question, text=self.cleaned_data.get('text'))
-        return answer
+        page = Answer.objects.get_page(answer.id, 6)
+        return answer, page

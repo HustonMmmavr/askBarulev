@@ -71,7 +71,7 @@ class QuestionManager(models.Manager):
 
     # single question
     def get_single(self, id_):
-        return self.init().add_author().add_answers().add_tags().get(id=id_)
+        return self.init().add_author().add_tags().get(id=id_)
 
     # best questions
     # def get_best(self):
@@ -117,6 +117,13 @@ class AnswerManager(models.Manager):
     def has_question(self, question):
         return self.filter(question=question)
 
+    def by_id(self, id):
+        return self.filter(question=id)
+
+    def get_page(self, a_id, answers_per_page):
+        q = Answer.objects.get(id=a_id).question
+        return int(len(Answer.objects.filter(question=q)) / answers_per_page + 1)
+    
     def sum_for_question(self, question):
         res = self.has_question(question).count()
         return res if res else 0

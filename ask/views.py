@@ -40,6 +40,7 @@ def main( wsgi_request):
 
 
 def paginate(objects, count_on_page, page_num, pages_to_show):
+	print(page_num)
 	paginator = Paginator(objects, count_on_page)
 	interval = int(pages_to_show / 2) + 1
 	
@@ -75,21 +76,23 @@ def tag(request, tag_name, page_num=1):
 	questions, page_range = paginate(questionsObjs, 5, page_num, 5)
 	return render(request, 'tag.html', {'questions': questions, 'page_range': page_range, 'paginator_url': 'tag-url', 'tag': tag}) 
 
-def question(request, question_number):
+def question(request, question_number, page_num=1):
 	try:
 		q = Question.objects.get_single(int(question_number))
+		answers_list = Answer.objects.by_id(q.id)
+		answers, page_range = paginate(answers_list, 6, page_num, 5)
 		if request.method == "POST":
 			form = AnswerForm(request.POST)
 			if form.is_valid():
-				answer = form.save(request, q)
-				return HttpResponseRedirect('/question/' + str(q.id) + '/#a_' + str(answer.id))
+				answer, page = form.save(request, q)
+				return HttpResponseRedirect('/question/' + str(q.id) + '/' + str(page) +  '/#a_' + str(answer.id))
 		else:
 			form = AnswerForm()
 	except Question.DoesNotExist:
 		raise Http404()
 	except ValueError:
 		raise Http404()
-	return render(request, 'question.html', {'question': q, 'form': form})
+	return render(request, 'question.html', {'question': q, 'answers': answers, 'page_range': page_range, 'form': form})
 
 def all(request, page_num=1):
 	questions = Question.objects.list_ordered_date()
