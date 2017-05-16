@@ -105,6 +105,7 @@ class SignupForm(forms.Form):
         up.save()
         return authenticate(username=u.username, password=password)
 
+#TODO send user to constructor
 class SettingsForm(forms.Form):
     username = forms.CharField(
             widget=forms.TextInput( attrs={ 'class': 'form-control inp-radius', 'placeholder': 'Login', }),
@@ -116,39 +117,50 @@ class SettingsForm(forms.Form):
             )
     avatar = forms.FileField(
             widget=forms.ClearableFileInput( attrs={ 'class': 'ask-signup-avatar-input', 'style' : 'display: none;',}),
-            required=False, label=u'Avatar', 
+            required=False, label=u'Avatar'
             )
 
-    def is_valid(self, user):
-    # run the parent validation first
-        valid=super(SettingsForm, self).is_valid()
+    def __init__(self, user, avatar, *args, **kwargs):
+        super(SettingsForm, self).__init__(*args, **kwargs)
+        self.user = user
+        self.avatar = avatar
+        self.fields['username'].initial = self.user.username
+        self.fields['email'].initial = self.user.email
+        self.path_avatar = self.avatar
 
-        # we're done now if not valid
-        if not valid:
-            return valid
+    # def is_valid(self):
+    # # run the parent validation first
+    #     valid=super(SettingsForm, self).is_valid()
+
+    #     # we're done now if not valid
+    #     if not valid:
+    #         return valid
         
+    #     username = self.cleaned_data.get('username')
+    #     if username == self.user.username:
+    #         return True
+    #     try:
+    #         u=User.objects.get(username=username)
+    #         self.add_error('username', 'This username used')
+    #         return False
+    #     except User.DoesNotExist:
+    #         return True
+
+    def clean_username(self):
         username = self.cleaned_data.get('username')
-        if username == user.username:
-            return True
+        print(username)
+        if username == self.user.username:
+            return username
         try:
             u=User.objects.get(username=username)
-            self.add_error('username', 'This username used')
-            return False
+            print(u)
+            raise forms.ValidationError(u'User with this name exist')     
         except User.DoesNotExist:
-            return True
-
-    # def clean_username(self):
-    #     username= self.cleaned_data.get('username')
-    #     try:
-    #         u = User.objects.get(username=username)
-    #         raise forms.ValidationError(u'User with this name exist') 
-    #     except User.DoesNotExist:
-    #         return username
+            return username
 
     def save(self, user):
         data = self.cleaned_data
         username = data.get('username')
-        # if username != None:
         user.username = username
         user.email = data.get('email')
         user.save()

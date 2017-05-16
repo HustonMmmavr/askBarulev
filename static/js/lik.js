@@ -4,7 +4,9 @@ $(document).ready(function(){
             console.log('1');
         var type =  'que';
         var type_like=$(this).data('typ');
-        var csrftoken = Cookies.get('csrftoken');
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        if (csrftoken == null)
+            csrftoken = Cookies.get('csrftoken'); 
         $.ajax({
             type: 'POST',
             url: '/like',
@@ -33,7 +35,9 @@ $(document).ready(function(){
         var aid = $(this).data('aid');
         var type =  'ans';
         var type_like=$(this).data('typ');
-        var csrftoken = Cookies.get('csrftoken');
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        if (csrftoken == null)
+            csrftoken = Cookies.get('csrftoken'); 
         $.ajax({
             type: 'POST',
             url: '/like',

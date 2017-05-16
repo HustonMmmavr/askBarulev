@@ -163,16 +163,18 @@ def ask(request):
 
 @login_required
 def settings(request):
+	profile = Profile.objects.get(user_id=request.user.id)
+	avatar = profile.avatar
 	if request.method == "POST":
-		form = SettingsForm(request.POST, request.FILES)
-		if form.is_valid(request.user):
+		form = SettingsForm(request.user, avatar, request.POST, request.FILES)
+		if form.is_valid():
 			user = form.save(request.user)
 			auth.login(request, user)
 			request.session['img'] = Profile.objects.filter(user_id=request.user.id)[0].get_avatar()
 			return HttpResponseRedirect('/settings')
 	else:
 		request.img = None
-		form = SettingsForm()
+		form = SettingsForm(request.user, avatar)
 	return render(request, 'settings.html', {
 			'form': form,
 			})

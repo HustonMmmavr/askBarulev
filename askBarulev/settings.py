@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'askBarulev.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'ask_test',
+        'NAME': 'askfull',
         'USER': 'comp',
         'PASSWORD': '951103',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on

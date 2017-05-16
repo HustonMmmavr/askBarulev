@@ -3,7 +3,9 @@
     $('.correct').click(function() {
         console.log('1');
         var aid = $(this).data('aid');
-        var csrftoken = Cookies.get('csrftoken');
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        if (csrftoken == null)
+            csrftoken = Cookies.get('csrftoken'); // read from input csrftoken
         var checked =$(this).prop("checked");
         console.log(csrftoken);
         console.log(aid);
