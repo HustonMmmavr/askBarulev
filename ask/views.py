@@ -181,7 +181,6 @@ def settings(request):
 
 @login_required()
 def correct(request):
-	print(request.body)
 	body = request.body.decode("utf-8")
 	request.POST = json.loads(body)
 	a = Answer.objects.get(id=request.POST.get('aid', False))

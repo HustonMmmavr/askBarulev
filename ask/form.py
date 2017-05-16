@@ -128,24 +128,6 @@ class SettingsForm(forms.Form):
         self.fields['email'].initial = self.user.email
         self.path_avatar = self.avatar
 
-    # def is_valid(self):
-    # # run the parent validation first
-    #     valid=super(SettingsForm, self).is_valid()
-
-    #     # we're done now if not valid
-    #     if not valid:
-    #         return valid
-        
-    #     username = self.cleaned_data.get('username')
-    #     if username == self.user.username:
-    #         return True
-    #     try:
-    #         u=User.objects.get(username=username)
-    #         self.add_error('username', 'This username used')
-    #         return False
-    #     except User.DoesNotExist:
-    #         return True
-
     def clean_username(self):
         username = self.cleaned_data.get('username')
         print(username)
